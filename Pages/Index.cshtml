@@ -4,6 +4,28 @@
     ViewData["Title"] = "Home page";
 }
 
+<script src="~/js/Countdown.js"></script>
+
 <div class="col-12">
     <img src="Content/Images/MWSF_Logo.png" class="img-fluid mx-auto d-block" alt="Midwest Speedfest logo" />
+</div>
+
+<div id="countDown" class="countDown col-12">
+    <h1>Countdown to Midwest Speedfest 2020!</h1>
+    <div>
+        <span class="days" id="day"></span>
+        <div class="countdownLabel">Days</div>
+    </div>
+    <div>
+        <span class="hours" id="hour"></span>
+        <div class="countdownLabel">Hours</div>
+    </div>
+    <div>
+        <span class="minutes" id="minute"></span>
+        <div class="countdownLabel">Minutes</div>
+    </div>
+    <div>
+        <span class="seconds" id="second"></span>
+        <div class="countdownLabel">Seconds</div>
+    </div>
 </div>

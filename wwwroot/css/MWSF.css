@@ -33,3 +33,40 @@ body {
 .upcoming-events-card {
     width: 350px;
 }
+
+
+/*Countdown Timer*/
+h1 {
+    color: #FFF;
+    font-weight: 100;
+    font-size: 40px;
+    margin: 40px 0px 20px;
+}
+
+#countDown {
+    font-family: sans-serif;
+    color: #fff;
+    display: inline-block;
+    font-weight: 100;
+    text-align: center;
+    font-size: 30px;
+}
+
+#countDown > div {
+    padding: 10px;
+    border-radius: 3px;
+    background: #55c6ff;
+    display: inline-block;
+}
+
+#countDown div > span {
+    padding: 15px;
+    border-radius: 3px;
+    background: #526fff;
+    display: inline-block;
+}
+
+.countdownLabel {
+    padding-top: 5px;
+    font-size: 16px;
+} 
