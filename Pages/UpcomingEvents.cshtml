@@ -6,12 +6,9 @@
 
 <h1>@ViewData["Title"]</h1>
 
-<div class="card upcoming-events-card bg-dark ">
-    <img class="card-img-top" src="Content/Images/MWSF_Logo.png" alt="Midwest Speedfest Logo">
-    <div class="card-body">
-        <h5 class="card-title">Midwest Speedfest 2020</h5>
-        <p>Midwest Speedfest 2020 is an online marathon taking place August 27-30 in support of <a target="_blank" href="https://ablegamers.org/">AbleGamers!</a></p>
-        <p>Submissions for Midwest Speedfest 2020 are open until July 7th at 11:59pm CST. A schedule will be created and released by July 14th at 11:59pm CST.</p>
-        <a href="https://www.speedrun.com/mwsf2020" target="_blank" class="btn btn-primary">Visit Speedrun.com page</a>
-    </div>
+<div class="card-deck">
+    @foreach (var cardHtmlString in Model.Cards)
+    {
+        @cardHtmlString
+    }
 </div>
