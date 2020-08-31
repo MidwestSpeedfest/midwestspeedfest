@@ -4,13 +4,22 @@
     ViewData["Title"] = "Home page";
 }
 
-<script src="~/js/Countdown.js"></script>
+<script src="https://embed.twitch.tv/embed/v1.js"></script>
+@*<script src="~/js/Countdown.js"></script>*@
 
-<div class="col-12">
-    <img src="Content/Images/MWSF_Logo.png" class="img-fluid mx-auto d-block" alt="Midwest Speedfest logo" />
+<div id="mainLogo" class="col 12">
+    <img src="Content/Images/MWSF_Logo.png" class="img-fluid img-fluid mx-auto d-block main-logo" alt="Midwest Speedfest Logo">
 </div>
 
-<div id="countDown" class="countDown col-12">
+<div id="headline">
+    <h1>Midwest Speedfest 2020 has concluded with a whopping $10,300 raised for <a href="https://ablegamers.org/"> The AbleGamers charity!</a></h1>
+    <p> We never could have imagined this becoming what it is now, and we really can't thank you all enough. This only happens because of you.</p>
+    <p>Our next event will be Midfall Speedball 2020 on November 20-22, with more details to come. </p>
+
+</div>
+
+
+<div id="countDown" class="countDown col-12" style="display: none" ;>
     <h1>Countdown to Midwest Speedfest 2020!</h1>
     <div>
         <span class="days" id="day"></span>
@@ -27,5 +36,35 @@
     <div>
         <span class="seconds" id="second"></span>
         <div class="countdownLabel">Seconds</div>
+    </div>
+</div>
+
+<div id="omgWeAreLive" class="twitch" style="display: none" ;>
+    <div class="twitch col-12">
+        <h1>Midwest Speedfest 2020 is live!</h1>
+        <div id="twitch-video" class="twitch-video">
+            <iframe src="https://player.twitch.tv/?channel=midwestspeedfest&parent=www.midwestspeedfest.com&parent=midwestspeedfest.com&parent=localhost&autoplay=false"
+                    frameborder="0"
+                    scrolling="no"
+                    allowfullscreen="true"
+                    height="100%"
+                    width="100%">
+            </iframe>
+        </div>
+        <div id="twitch-chat" class="twitch-chat">
+            <iframe frameborder="0"
+                    scrolling="no"
+                    src="https://www.twitch.tv/embed/midwestspeedfest/chat?parent=www.midwestspeedfest.com&parent=midwestspeedfest.com&parent=localhost&darkpopout"
+                    height="100%"
+                    width="100%">
+            </iframe>
+        </div>
+    </div>
+
+    <div class="belowPlayerLinksWrapper">
+        <a href="https://www.twitch.tv/midwestspeedfest" class="below_player_links">Watch On Twitch</a>
+        <a href="https://horaro.org/mwsf2020/mwsf2020" target="_blank" class="below_player_links">View Schedule</a>
+        <a href="https://www.speedrun.com/mwsf2020/donate" target="_blank" class="below_player_links">Donate</a>
+        <a href="https://theyetee.com/collections/2d-con/products/midwest-speedfest-2020" target="_blank" class="below_player_links">Buy a shirt!</a>
     </div>
 </div>
