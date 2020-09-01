@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\Content\Images\StaffLogos\**" />
+    <Content Remove="wwwroot\Content\Images\StaffLogos\**" />
+    <EmbeddedResource Remove="wwwroot\Content\Images\StaffLogos\**" />
+    <None Remove="wwwroot\Content\Images\StaffLogos\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="wwwroot\Content\Images\BG_BlueTriangles.png" />
   </ItemGroup>
 
