@@ -1,32 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Policy;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 using Microsoft.AspNetCore.Html;
 
-namespace MidwestSpeedfest.Utils
+namespace MidwestSpeedfest.Utils.Cards
 {
-    public class UpcomingEventCard
+    public class UpcomingEventAbstractCard : AbstractCard
     {
         private const string DefaultImagSrc = "Content/Images/MWSF_Logo.png";
         private const string DefaultAltText = "Midwest Speedfest Logo";
-        public string Title { get; set; }
-        public string ImageUrl { get; set; }
-        public string AltText { get; set; }
-        public string Description { get; set; }
         public string RunnerApplicationUrl { get; set; }
 
 
-        public UpcomingEventCard(string title = "", string description = "", string runnerApplicationUrl = "")
+        public UpcomingEventAbstractCard(string title = "", string description = "", string runnerApplicationUrl = "")
         {
             Title = title;
             Description = description;
             RunnerApplicationUrl = runnerApplicationUrl;
         }
 
-        public HtmlString GetCardHtml()
+        public override HtmlString GetCardHtml()
         {
             var ShouldUseDefaultImage = string.IsNullOrEmpty(ImageUrl);
             var sb = new StringBuilder();
@@ -35,7 +26,7 @@ namespace MidwestSpeedfest.Utils
             sb.AppendLine($@"       <img class=""card-img-top"" src=""{(ShouldUseDefaultImage ? DefaultImagSrc : ImageUrl)}"" alt=""{(ShouldUseDefaultImage ? DefaultAltText : AltText)}"">");
             sb.AppendLine(@"    </div>");
             sb.AppendLine(@"    <div class=""card-body"">");
-            sb.AppendLine($@"       <h4 class=""card-title"">{Title}</h5>");
+            sb.AppendLine($@"       <h4 class=""card-title"">{Title}</h4>");
             sb.AppendLine($@"       <p class=""card-text"">{Description}</p>");
             if (!string.IsNullOrEmpty(RunnerApplicationUrl))
             {

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MidwestSpeedfest.Utils;
+using MidwestSpeedfest.Utils.Cards;
 
 namespace MidwestSpeedfest.Pages
 {
@@ -21,7 +22,7 @@ namespace MidwestSpeedfest.Pages
         private void PopulateUpcomingEventCards()
         {
             Cards.Add(
-                new UpcomingEventCard
+                new UpcomingEventAbstractCard
                 {
                     Title = "MidFall SpeedBall",
                     ImageUrl = null,

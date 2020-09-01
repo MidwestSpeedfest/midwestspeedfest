@@ -1,0 +1,82 @@
+{
+  "DJ_Phatzo": {
+    "DisplayName": "DJ_Phatzo",
+    "Pronouns": {},
+    "LogoUrl": {},
+    "Title": "Outreach Manager",
+    "Twitch": "dj_phatzo",
+    "Twitter": "OriginalPhatzo",
+    "SrcProfile": "Phatzo",
+    "Description": {}
+  },
+  "EyeOfNewt": {
+    "DisplayName": "EyeOf_Newt",
+    "Pronouns": "She/Her",
+    "LogoUrl": {},
+    "Title": "Production Manager",
+    "Twitch": "eyeof_newt",
+    "Twitter": "EyeOf_Newt",
+    "SrcProfile": {},
+    "Description": {}
+  },
+  "Gooby": {
+    "DisplayName": "Gooby",
+    "Pronouns": "He/Him",
+    "LogoUrl": {},
+    "Title": "Production Manager, Charity Organizer",
+    "Twitch": "",
+    "Twitter": "CountGooby",
+    "SrcProfile": "CountGooby",
+    "Description": "Should Go to Bed"
+  },
+  "Helix": {
+    "DisplayName": "Helix",
+    "Pronouns": "They/Them",
+    "LogoUrl": {},
+    "Title": "Head of Hosting, Social Media Manager",
+    "Twitch": "Helix13_",
+    "Twitter": "Helix13_",
+    "SrcProfile": "Helix",
+    "Description": ""
+  },
+  "Lavan": {
+    "DisplayName": "LavanFirestorm",
+    "Pronouns": "He/They",
+    "LogoUrl": {},
+    "Title": "Volunteer Coordinator",
+    "Twitch": "",
+    "Twitter": {},
+    "SrcProfile": {},
+    "Description": ""
+  },
+  "marquisdan": {
+    "DisplayName": "marquisdan",
+    "Pronouns": "He/Him",
+    "LogoUrl": {},
+    "Title": "Lead Web Developer, Pestobot Developer",
+    "Twitch": "",
+    "Twitter": {},
+    "SrcProfile": {},
+    "Description": ""
+  },
+  "Rawket": {
+    "DisplayName": "Rawket",
+    "Pronouns": "He/Him",
+    "LogoUrl": {},
+    "Title": "Lead Technical Staff",
+    "Twitch": "",
+    "Twitter": "kupokraft",
+    "SrcProfile": "kupokraft",
+    "Description": ""
+  },
+  "SecksWrecks": {
+    "DisplayName": "SecksWrecks",
+    "Pronouns": "They/Them",
+    "LogoUrl": {},
+    "Title": "Lead Technical Staff",
+    "Twitch": "seckswrecks",
+    "Twitter": "SecksWrecks",
+    "SrcProfile": "seckswrecks",
+    "Description": ""
+  }
+}
