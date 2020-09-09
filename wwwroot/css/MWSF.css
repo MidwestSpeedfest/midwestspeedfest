@@ -155,6 +155,10 @@ a.below_player_links {
 }
 
 @media screen and (min-width: 1000px) {
+    .staff-name-title-parent li:not(:last-child):after {
+       /*Add comma after list items, except the last one*/
+        content: ", \00A0";
+    }
     .staff-name {
        
     }
@@ -203,19 +207,22 @@ a.below_player_links {
 
 .below_image_pronouns_dt {
     display: inline-block;
-/*    width: 50%;*/
 }
 
 .below_image_pronouns_dd {
     display: inline-block;
-    min-width: 5%;
+    min-width: 5%;  
 }
 
 /*Staff Page Logo image*/
-/*Moblie screens*/
 
-@media only screen and (max-width: 550px) {
+.staff_logo {
+    min-width: 85%;
+}
+/*Moblie screens*/
+@media only screen and (max-width: 570px) {
     .staff_logo {
+        min-width: 50%;
         max-width: 70%;
     }
 }
