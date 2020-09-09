@@ -179,11 +179,14 @@ a.below_player_links {
         
     }
 }
-/*Mobile*/
-@media only screen and (max-width: 550px) {
+/*Smol windows*/
+@media only screen and (max-width: 768px) {
     .staff-name {
-        font-size: 5.5rem;
+        font-size: 4.5rem;
     }
+}
+/*Big mobile*/
+@media only screen and (max-width: 550px) {
     .staff-title {
         font-size: x-large;
     }
@@ -192,7 +195,7 @@ a.below_player_links {
 /*smol mobile*/
 @media only screen and (max-width: 450px) {
     .staff-name {
-        font-size: 3.8rem;
+        font-size: 3.5rem;
     }
 }
 
