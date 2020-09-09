@@ -1,9 +1,81 @@
 ﻿@page
 @model MidwestSpeedfest.Pages.Staff.StaffDetailsModel
 @{
-    ViewData["Title"] = "StaffDetails";
+    ViewData["Title"] = @Model.StaffMember.DisplayName + " Profile";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
+<div class="opacity-50-dark">
 
-<h1>StaffDetails</h1>
+    <div id="staff_name_and_title" class="staff-name-title-parent">
+        <div id="name" class="display-1 staff-name ">@Model.StaffMember.DisplayName</div>
+        <div id="staff_title" class="h1 staff-title ">
+            <ul>
+                @foreach (var @title in @Model.StaffMember.Titles)
+                {
+                    <li class="staff-title">@title</li>
+                }
+            </ul>
+        </div>
+    </div>
 
+    <div id="staff_details_body" class="row mt-4">
+        <div id="staff_body_left" class="col-sm-4">
+
+            <img id="logo" class="img-fluid rounded-circle mx-auto d-block staff_logo" src=@($"/Content/StaffBios/Logos/{@Model.StaffMember.LogoUrl}")>
+               
+
+            @if (!string.IsNullOrEmpty(@Model.StaffMember.Pronouns))
+            {
+                <div id="pronouns" class="text-center mt-2">
+                    <dl id="details" class="below_image_pronouns_dl">
+                        <dt class="below_image_pronouns_dt">Pronouns</dt>
+                        <dd class="below_image_pronouns_dd">
+                            @Model.StaffMember.Pronouns
+                        </dd>
+                    </dl>
+                </div>
+            }
+
+            <div id="social_links">
+                <ul class="list-inline social_media_icon_parent">
+                    @if (!string.IsNullOrEmpty(@Model.StaffMember.Twitch))
+                    {
+                        <li class="list-inline-item">
+                            <a href=@($"https://www.twitch.tv/{@Model.StaffMember.Twitch}")>
+                                <img class="social_media_icon img-fluid" src="/Content/Images/SocialMediaIcons/Twitch.png"/>
+                            </a>
+                        </li>
+                    }
+                    @if (!string.IsNullOrEmpty(@Model.StaffMember.Twitter))
+                    {
+                        <li class="list-inline-item">
+                            <a href=@($"https://www.twitter.com/{@Model.StaffMember.Twitter}")>
+                                <img class="social_media_icon img-fluid" src="/Content/Images/SocialMediaIcons/Twitter.png"/>
+                            </a>
+                        </li>
+                    }
+                    @if (!string.IsNullOrEmpty(@Model.StaffMember.SrcProfile))
+                    {
+                        <li class="list-inline-item">
+                            <a href=@($"https://www.youtube.com/channel/{@Model.StaffMember.Youtube}")>
+                                <img class="social_media_icon img-fluid" src="/Content/Images/SocialMediaIcons/Youtube.png"/>
+                            </a>
+                        </li>
+                    }
+                    @if (!string.IsNullOrEmpty(@Model.StaffMember.SrcProfile))
+                    {
+                        <li class="list-inline-item">
+                            <a href=@($"https://www.youtube.com/{@Model.StaffMember.SrcProfile}")>
+                                <img class="social_media_icon img-fluid" src="/Content/Images/SocialMediaIcons/SRC.png"/>
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+
+        <div id="bio" class="col-sm-8">
+            @Html.Raw(Model.StaffMember.Description)
+        </div>
+    </div>
+</div>

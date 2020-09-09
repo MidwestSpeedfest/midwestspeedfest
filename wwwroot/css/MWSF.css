@@ -7,6 +7,12 @@ a.navbar-brand {
   /*word-break: break-all;*/
 }
 
+/*50% opacity dark background for use throughout the site*/
+.opacity-50-dark {
+    background: #7f7f7f; /*for IE 8 plebs I guess*/
+    background: rgba(0,0,0,0.5);
+}
+
 
 /* Provide sufficient contrast against blue background */
 a:link {
@@ -135,6 +141,84 @@ a.below_player_links {
     top: 0;
 }
 
+/*Staff Page Stuff*/
+.staff-name-title-parent {
+
+}
+.staff-name {
+    text-align: center;
+}
+.staff-title {
+    list-style-type: none;
+    font-style: italic;
+    text-align: center;
+}
+
+@media screen and (min-width: 1000px) {
+    .staff-name {
+       
+    }
+    .staff-title {
+        display: inline;
+    }
+}
+
+@media screen and (min-width: 850px) {
+    .staff-name-title-parent {
+    }
+
+    .staff-name {
+
+    }
+
+    .staff-title {
+        
+    }
+}
+
+@media only screen and (max-width: 550px) {
+    .staff-title {
+        font-size: x-large;
+    }
+}
+
+/*Social Media Icons*/
+.social_media_icon_parent {
+    text-align: center;
+}
+
+.social_media_icon {
+    display: inline-block;
+    max-height: 50px;
+}
+
+/*Staff Page Pronouns*/
+.below_image_pronouns_dl {
+    display: inline-block;
+}
+
+    .below_image_pronouns_dl dt:after {
+        content: ": \2004";
+    }
+
+.below_image_pronouns_dt {
+    display: inline-block;
+/*    width: 50%;*/
+}
+
+.below_image_pronouns_dd {
+    display: inline-block;
+    min-width: 5%;
+}
+
+/*Staff Page Logo image*/
+/*Moblie screens*/
+
+@media only screen and (max-width: 550px) {
+    .staff_logo {
+        max-width: 70%;
+    }
+}
 
 
 /*Large screens only*/
