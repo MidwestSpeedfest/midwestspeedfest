@@ -20,9 +20,9 @@
 
     <div id="staff_details_body" class="row mt-4">
         <div id="staff_body_left" class="col-sm-4">
-
-            <img id="logo" class="img-fluid rounded-circle mx-auto d-block staff_logo" src=@($"/Content/StaffBios/Logos/{@Model.StaffMember.LogoUrl}")>
-               
+            <div id="staff_logo_border" class="m-3">
+                <img id="staff_logo_image" class="img-fluid rounded-circle mx-auto d-block staff_logo" src=@($"/Content/StaffBios/Logos/{@Model.StaffMember.LogoUrl}") alt="Logo for @Model.StaffMember.DisplayName">
+            </div>
 
             @if (!string.IsNullOrEmpty(@Model.StaffMember.Pronouns))
             {
@@ -54,7 +54,7 @@
                             </a>
                         </li>
                     }
-                    @if (!string.IsNullOrEmpty(@Model.StaffMember.SrcProfile))
+                    @if (!string.IsNullOrEmpty(@Model.StaffMember.Youtube))
                     {
                         <li class="list-inline-item">
                             <a href=@($"https://www.youtube.com/{@Model.StaffMember.Youtube}")>
@@ -65,7 +65,7 @@
                     @if (!string.IsNullOrEmpty(@Model.StaffMember.SrcProfile))
                     {
                         <li class="list-inline-item">
-                            <a href=@($"https://www.youtube.com/{@Model.StaffMember.SrcProfile}")>
+                            <a href=@($"https://www.speedrun.com/user/{@Model.StaffMember.SrcProfile}")>
                                 <img class="social_media_icon img-fluid" src="/Content/Images/SocialMediaIcons/SRC.png"/>
                             </a>
                         </li>
@@ -74,8 +74,11 @@
             </div>
         </div>
 
-        <div id="bio" class="col-sm-8">
-            @Html.Raw(Model.StaffMember.Description)
+        <div id="staff_body_right" class="col-sm-8">
+            <div id="bio" class="m-2">
+                @Html.Raw(Model.StaffMember.Description)
+            </div>
         </div>
     </div>
+
 </div>

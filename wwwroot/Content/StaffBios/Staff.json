@@ -25,10 +25,10 @@
     "DisplayName": "Gooby",
     "Pronouns": "He/Him",
     "LogoUrl": "Gooby.jpg",
-    "Titles": ["Production Manager", "Charity Organizer"],
-    "Twitch": "",
+    "Titles": [ "Production Manager", "Charity Organizer" ],
+    "Twitch": "countgooby",
     "Twitter": "CountGooby",
-    "YouTube": "",
+    "YouTube": "user/PKStarstorm22",
     "SrcProfile": "CountGooby",
     "Description": "Should Go to Bed"
   },
@@ -48,10 +48,10 @@
     "Pronouns": "He/They",
     "LogoUrl": "Lavan.png",
     "Titles": [ "Volunteer Coordinator" ],
-    "Twitch": "",
+    "Twitch": "lavanfirestorm",
     "Twitter": "",
     "YouTube": "",
-    "SrcProfile": "",
+    "SrcProfile": "LavanFirestorm",
     "Description": ""
   },
   "marquisdan": {
