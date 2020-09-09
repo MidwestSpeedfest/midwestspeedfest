@@ -153,7 +153,7 @@ a.below_player_links {
     font-style: italic;
     text-align: center;
 }
-
+/*uhh big windows.*/
 @media screen and (min-width: 1000px) {
     .staff-name-title-parent li:not(:last-child):after {
        /*Add comma after list items, except the last one*/
@@ -166,7 +166,7 @@ a.below_player_links {
         display: inline;
     }
 }
-
+/*Windowed Mode*/
 @media screen and (min-width: 850px) {
     .staff-name-title-parent {
     }
@@ -179,10 +179,20 @@ a.below_player_links {
         
     }
 }
-
+/*Mobile*/
 @media only screen and (max-width: 550px) {
+    .staff-name {
+        font-size: 5.5rem;
+    }
     .staff-title {
         font-size: x-large;
+    }
+}
+
+/*smol mobile*/
+@media only screen and (max-width: 450px) {
+    .staff-name {
+        font-size: 3.8rem;
     }
 }
 
