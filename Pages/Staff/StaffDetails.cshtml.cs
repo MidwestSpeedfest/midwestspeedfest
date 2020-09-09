@@ -63,7 +63,7 @@ namespace MidwestSpeedfest.Pages.Staff
                 Titles = new[] {"Head of Aeronautics"},
                 Twitch = "midwestspeedfest",
                 Twitter = "MWSpeedfest",
-                Youtube = "UCxZU3lVJEAW5P-PI9ozlqOg",
+                Youtube = "channel/UCxZU3lVJEAW5P-PI9ozlqOg",
                 SrcProfile = "midwestspeedfest",
                 Description = DefaultDescription
             };
