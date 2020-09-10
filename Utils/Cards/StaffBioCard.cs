@@ -3,8 +3,12 @@ using Microsoft.AspNetCore.Html;
 
 namespace MidwestSpeedfest.Utils.Cards
 {
-    public class StaffBioCard : AbstractCard
+    public class StaffBioCard : StaffCard
     {
+        public StaffBioCard(string key) : base(key)
+        {
+        }
+
         public override HtmlString GetCardHtml()
         {
             var sb = new StringBuilder();
@@ -23,5 +27,7 @@ namespace MidwestSpeedfest.Utils.Cards
 
             throw new System.NotImplementedException();
         }
+
+
     }
 }
