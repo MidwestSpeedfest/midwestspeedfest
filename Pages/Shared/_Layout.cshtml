@@ -6,7 +6,8 @@
     <title>@ViewData["Title"] - MidwestSpeedfest</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.min.css" />
-    <link rel="stylesheet" href="~/css/MWSF.min.css" />
+  @*  <link rel="stylesheet" href="~/css/MWSF.min.css" />*@
+    <link rel="stylesheet" href="~/css/MWSF.css" />
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
@@ -40,12 +41,12 @@
 
                             </div>
                         </li>
-                        <li class="nav-item">
+                        @*<li class="nav-item">
                             <a class="nav-link text-light" href="https://www.speedrun.com/mwsf2020" target="_blank">Current Marathon</a>
-                        </li>
+                        </li>*@
                         <li class="nav-item">
                             <a class="nav-link text-light" href="https://www.speedrun.com/midwest_speedfest" target="_blank">Staff</a>
-                     @*       <a class="nav-link text-light" asp-page="/Staff/StaffIndex">Staff</a>*@
+                         @*   <a class="nav-link text-light" asp-page="/Staff/StaffIndex">Staff</a>*@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-page="/ContactUs">Contact Us</a>
