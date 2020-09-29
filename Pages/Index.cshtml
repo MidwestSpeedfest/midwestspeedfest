@@ -5,41 +5,47 @@
 }
 
 @*<script src="https://embed.twitch.tv/embed/v1.js"></script>*@
-@*<script src="~/js/Countdown.min.js"></script>*@
+<script src="~/js/Countdown.min.js"></script>
 
 <div id="mainLogo" class="col 12">
     <img src="Content/Images/MWSF_Logo.png" class="img-fluid img-fluid mx-auto d-block main-logo" alt="Midwest Speedfest Logo">
 </div>
 
 <div id="headline">
-    <h1>Midwest Speedfest 2020 has concluded with a whopping $10,300 raised for <a href="https://ablegamers.org/"> The AbleGamers charity!</a></h1>
-    <p> We never could have imagined this becoming what it is now, and we really can't thank you all enough. This only happens because of you.</p>
-    <p>Our next event will be Midfall Speedball 2020 on November 20-22, with more details to come. </p>
-
+    <div class="h1">Midfall Speedball 2020 is coming November 20-22 in support of the  <a href="https://whitebearfoodshelf.org/"> White Bear Emergency Food Shelf!</a></div>
 </div>
 
+<div class="pt-3" id="SubmissionsInfo">
+    <div class="h2">Submissions are currently open!</div>
+    <ul>
+        <li><a href="https://www.speedrun.com/mfsb2020/submitrun" a>Click here to Submit a run</a></li>
+        <li>Submissions are open until Sunday, October 11th at 11:59pm (Central time)! </li>
+        <li>Runners from all over the world are welcome to submit, but there is a cap of 5 submissions per runner. </li>
+        <li>Volunteer applications will be opened at a later date.</li>
+    </ul>
+</div>
 
-@*<div id="countDown" class="countDown col-12" style="display: none" ;>
-    <h1>Countdown to Midwest Speedfest 2020!</h1>
-    <div>
-        <span class="days" id="day"></span>
+<div id="countDown" class="countDown col-12" style="display: none" ;>
+    <h1>Countdown to Submissions Closing</h1>
+    <div class="col-auto countDownBox">
+        <span id="day"></span>
         <div class="countdownLabel">Days</div>
     </div>
-    <div>
-        <span class="hours" id="hour"></span>
+    <div class="col-auto countDownBox">
+        <span id="hour"></span>
         <div class="countdownLabel">Hours</div>
     </div>
-    <div>
-        <span class="minutes" id="minute"></span>
+    <div class="col-auto countDownBox">
+        <span id="minute"></span>
         <div class="countdownLabel">Minutes</div>
     </div>
-    <div>
-        <span class="seconds" id="second"></span>
+    <div class="col-auto countDownBox">
+        <span id="second"></span>
         <div class="countdownLabel">Seconds</div>
     </div>
 </div>
 
-<div id="omgWeAreLive" class="twitch" style="display: none" ;>
+@*<div id="omgWeAreLive" class="twitch" style="display: none" ;>
     <div class="twitch col-12">
         <h1>Midwest Speedfest 2020 is live!</h1>
         <div id="twitch-video" class="twitch-video">

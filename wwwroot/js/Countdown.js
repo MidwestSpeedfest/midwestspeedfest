@@ -1,5 +1,5 @@
-﻿var marathonStart = new Date("aug 27, 2020 11:00:00").getTime();
-var remaining = marathonStart - new Date().getTime();
+﻿var TimerEnd = new Date("oct 11, 2020 23:59:00-05:00").getTime();
+var remaining = TimerEnd - new Date().getTime();
 
 var swapLogoAndStream = function () {
     $("#mainLogo").toggle();
@@ -9,7 +9,7 @@ var swapLogoAndStream = function () {
 //Run on document ready - see which elements to show
 $(function() {
     if (remaining < 0) {
-        swapLogoAndStream();
+       // swapLogoAndStream();
     } else {
         $("mainLogo").show();
         $('#countDown').show();
@@ -34,7 +34,7 @@ if (remaining > 0) {
         if (remaining < 0) {
             clearInterval(x);
             $("#countDown").hide();
-            swapLogoAndStream();
+          //  swapLogoAndStream();
         }
         remaining -= 1000;
     }, 1000);

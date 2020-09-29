@@ -88,10 +88,20 @@ h1 {
 }
 
 #countDown div > span {
-    padding: 15px;
+    padding: 10px;
+    margin: auto;
     border-radius: 3px;
     background: #526fff;
     display: inline-block;
+}
+
+.countDownBox {
+    max-width: 22.5%;
+    white-space: nowrap;
+}
+
+.countDownBox > span {
+
 }
 
 .countdownLabel {
@@ -139,15 +149,68 @@ a.below_player_links {
 }
 
 /*Staff Index Stuff*/
+.staff-index-header {
+    font-size: 2.8rem;
+}
+
 .select-staff-card {
-    min-width: 200px;
-    max-width: 400px;
+/*    min-width: 18rem;
+    max-width: 22rem;*/
+  /*  min-width: 200px;
+    max-width: 400px;*/
+    width: 22%;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
+.select-staff-card:hover {
+    border: yellow;
+    border: 5px;
+}
+
 .select-staff-image {
-    width: 100%;
-    height: 100%;
+    width: 95%;
+    height: 95%;
+}
+
+.staff-select-footer {
+    box-sizing: content-box;
+    white-space: nowrap;
+    padding: 0px;
+}
+
+.staff-shrinky-text {
+    font-size: 28px;
+}
+
+@media screen and (max-width: 994px) {
+    .staff-index-header {
+        font-size: 2rem;
+    }
+
+    .staff-shrinky-text {
+        font-size: 20px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .staff-index-header {
+        font-size: 2rem;
+    }
+
+    .staff-shrinky-text {
+        font-size: 15px;
+    }
+}
+
+
+@media screen and (max-width: 615px) {
+    .staff-index-header {
+        font-size: 1.8rem;
+    }
+
+    .staff-shrinky-text {
+        font-size: 20px;
+    }
 }
 
 @media screen and (max-width: 575px) {
@@ -156,9 +219,13 @@ a.below_player_links {
         margin-right: auto !important;
     }
 
+    .staff-shrinky-text {
+        font-size: 15px;
+    }
+
     .select-staff-image {
-        width: 225px;
-        height:225px;
+/*        width: 225px;
+        height:225px;*/
     }
 }
 
