@@ -1,17 +1,17 @@
-﻿var TimerEnd = new Date("oct 11, 2020 23:59:00-05:00").getTime();
+﻿var TimerEnd = new Date("Nov 20, 2020 12:00:00-06:00").getTime();
 var remaining = TimerEnd - new Date().getTime();
 
 var swapLogoAndStream = function () {
-    $("#mainLogo").toggle();
+    $("#NonTwitchContent").toggle();
     $("#omgWeAreLive").toggle();
 }
 
 //Run on document ready - see which elements to show
 $(function() {
     if (remaining < 0) {
-       // swapLogoAndStream();
+        swapLogoAndStream();
     } else {
-        $("mainLogo").show();
+        $("#NonTwitchContent").show();
         $('#countDown').show();
     }
 });
@@ -34,7 +34,7 @@ if (remaining > 0) {
         if (remaining < 0) {
             clearInterval(x);
             $("#countDown").hide();
-          //  swapLogoAndStream();
+            swapLogoAndStream();
         }
         remaining -= 1000;
     }, 1000);
