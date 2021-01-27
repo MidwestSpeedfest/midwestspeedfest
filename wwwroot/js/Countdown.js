@@ -1,4 +1,4 @@
-﻿var TimerEnd = new Date("Nov 20, 2020 12:00:00-06:00").getTime();
+﻿var TimerEnd = new Date("21 February, 2021 23:59:59 CST").getTime();
 var remaining = TimerEnd - new Date().getTime();
 
 var swapLogoAndStream = function () {
