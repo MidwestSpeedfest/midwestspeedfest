@@ -10,6 +10,13 @@
     background: rgba(0,0,0,0.5);
 }
 
+body {
+    background: url("../Content/Images/BG_BlueTriangles.png") repeat 0 0;
+    background-size: cover;
+    background-attachment: fixed;
+    background-size: 100% auto;
+}
+
 
 /* Provide sufficient contrast against blue background */
 a:link {
