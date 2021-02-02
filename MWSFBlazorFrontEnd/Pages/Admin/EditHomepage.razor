@@ -1,0 +1,90 @@
+﻿@page "/admin/edithomepage"
+@using AutoMapper
+@using MWSFBlazorFrontEnd.Models.FrontPage
+@using MWSFDataAccess.DataService.FrontPage
+@inject IFrontPageDataService DataService
+@inject IMapper Mapper
+
+<h2>Edit homepage</h2>
+
+@if (_showFeedback)
+{
+    <div class="row" id="indexSettingsFeedback">
+        <div class=@($"{_feedbackCss} col-xl-5 font-weight-bold")>
+            @_feedbackMessage
+        </div>
+    </div>
+}
+
+<div class="row" id="indexSettings">
+    <div class="opacity-50-dark p-3 col-xl-5" style="max-width: 50%">
+        <EditForm model="@_settingsModel" OnSubmit="@HandleOnSubmit">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+            <label class="font-weight-bold">
+                Show Logo: &nbsp;
+                <InputCheckbox @bind-Value="@_settingsModel.ShowLogo"></InputCheckbox>
+            </label> <br />
+            <label class="font-weight-bold">
+                Headline Text:
+                <InputText @bind-Value="@_settingsModel.Headline"></InputText>
+            </label><br />
+            <label class="font-weight-bold">
+                Details Text: &nbsp;
+                <InputTextArea @bind-Value="@_settingsModel.Details"></InputTextArea>
+            </label><br />
+            <label class="font-weight-bold">
+                Show Countdown: &nbsp;
+                <InputCheckbox @bind-Value="@_settingsModel.ShowCountdown"></InputCheckbox>
+            </label><br />
+            @if (_settingsModel.ShowCountdown)
+            {
+                <label class="font-weight-bold">
+                    Countdown Title: &nbsp;
+                    <InputText @bind-Value="@_settingsModel.CountdownTitle"></InputText>
+                </label><br />
+            }
+
+            <span style="display: flex; justify-content: flex-end; width: 100%; padding: 0;">
+                <button class="btn btn-primary" type="submit">Save</button>
+            </span>
+
+        </EditForm>
+    </div>
+</div>
+
+
+@code {
+    private DisplayFrontPageSettingsModel _settingsModel = new DisplayFrontPageSettingsModel();
+    private bool _showFeedback;
+    private string _feedbackMessage;
+    private string _feedbackCss;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var dbSettings = await DataService.GetNewestFrontPageSettingsModel();
+
+        if (dbSettings != null)
+        {
+            _settingsModel = Mapper.Map<DisplayFrontPageSettingsModel>(dbSettings);
+        }
+
+        await base.OnParametersSetAsync();
+    }
+
+    private async Task HandleOnSubmit()
+    {
+        _showFeedback = true;
+        try
+        {
+            await DataService.SaveFrontPageSettings(_settingsModel);
+            _feedbackCss = "alert-success";
+            _feedbackMessage = "Settings saved successfully!";
+        }
+        catch (Exception e)
+        {
+            _feedbackCss = "alert-danger";
+            _feedbackMessage = $"Could not save Settings:  {e.Message}";
+        }
+    }
+}

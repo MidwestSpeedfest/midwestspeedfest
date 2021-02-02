@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="fe05724d-cffc-4dba-9a03-9deafde0b8c7" ChangeDateTime="02/01/2021 22:01:12">
+    <Property Name="ElementName" Value="[dbo].[FrontPageSettings].[Headline]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[FrontPageSettings]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ShowLogo" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="3a7e7b23-013c-4078-9853-d4ba3f3c1775" ChangeDateTime="02/01/2021 22:02:42">
+    <Property Name="ElementName" Value="[dbo].[FrontPageSettings].[Headlin]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[FrontPageSettings]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Headline" />
+  </Operation>
+</Operations>

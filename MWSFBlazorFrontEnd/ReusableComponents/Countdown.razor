@@ -1,0 +1,28 @@
+﻿@using System.Reflection.Metadata
+@using System.Runtime.CompilerServices
+
+
+<div id="countDown" class="countDown col-12">
+    @if (string.IsNullOrWhiteSpace(CountDownTitle) == false)
+    {
+        <h1>@CountDownTitle</h1>
+    }
+    @foreach (var countDownLabel in _countDownLabels)
+    {
+        <div class="col-auto countDownBox">
+            <span id="@(countDownLabel.ToLower())"></span>
+            <div class="countdownLabel">@countDownLabel</div>
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public string CountDownTitle { get; set; }
+
+    [Parameter]
+    public DateTime EndTime { get; set; }
+
+    private readonly string[] _countDownLabels = {"Days", "Hours", "Minutes", "Seconds"};
+
+}
