@@ -1,0 +1,52 @@
+﻿@page "/MWSFHome"
+@page "/"
+@using AutoMapper
+@using MWSFBlazorDemo.Data.DummyDataAccess
+@using MWSFBlazorFrontEnd.Models.FrontPage
+@using MWSFDataAccess.DataAccess
+@using MWSFDataAccess.DataService.FrontPage
+@using MWSFDataAccess.Models.FrontPage
+@inject IFrontPageDataService DataService
+@inject IMapper Mapper
+
+<div class ="container" id="homepage_content">
+    <div id="NonTwitchContent">
+        @if (_settingsModel.ShowLogo)
+        {
+            <div id="mainLogo" class="col 12">
+                <img src="Content/Images/MWSF_Logo.png" class="img-fluid img-fluid mx-auto d-block main-logo" alt="Midwest Speedfest Logo">
+            </div>
+        }
+
+        <div id="headline" class="col-12">
+            <div class="h1">
+                @_settingsModel.Headline
+            </div>
+            <div class="h3">
+                @_settingsModel.Details
+            </div>
+        </div>
+        @if (_settingsModel.ShowCountdown)
+        {
+            <Countdown CountDownTitle="@_settingsModel.CountdownTitle"></Countdown>
+        }
+    </div>
+</div>
+
+@code {
+
+    private DisplayFrontPageSettingsModel _settingsModel = new DisplayFrontPageSettingsModel();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var dbSettings = await DataService.GetNewestFrontPageSettingsModel();
+
+        if (dbSettings != null)
+        {
+            _settingsModel = Mapper.Map<DisplayFrontPageSettingsModel>(dbSettings);
+        }
+
+        await base.OnParametersSetAsync();
+    }
+
+}
