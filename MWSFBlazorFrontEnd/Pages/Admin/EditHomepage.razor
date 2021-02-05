@@ -2,6 +2,7 @@
 @using AutoMapper
 @using MWSFBlazorFrontEnd.Models.FrontPage
 @using MWSFDataAccess.DataService.FrontPage
+
 @inject IFrontPageDataService DataService
 @inject IMapper Mapper
 
@@ -10,45 +11,57 @@
 @if (_showFeedback)
 {
     <div class="row" id="indexSettingsFeedback">
-        <div class=@($"{_feedbackCss} col-xl-5 font-weight-bold")>
+        <div class=@($"{_feedbackCss} col-md-5 font-weight-bold")>
             @_feedbackMessage
         </div>
     </div>
 }
-
 <div class="row" id="indexSettings">
-    <div class="opacity-50-dark p-3 col-xl-5" style="max-width: 50%">
-        <EditForm model="@_settingsModel" OnSubmit="@HandleOnSubmit">
+      <div class="opacity-50-dark p-3 col-md-5">
+
+        <EditForm Model="@_settingsModel" OnSubmit="@HandleOnSubmit">
             <DataAnnotationsValidator />
             <ValidationSummary />
-            <label class="font-weight-bold">
+            <label class="font-weight-bold my-2">
                 Show Logo: &nbsp;
-                <InputCheckbox @bind-Value="@_settingsModel.ShowLogo"></InputCheckbox>
+                <RadzenCheckBox @bind-Value="_settingsModel.ShowLogo"></RadzenCheckBox>
             </label> <br />
-            <label class="font-weight-bold">
+            <label class="font-weight-bold my-2">
                 Headline Text:
-                <InputText @bind-Value="@_settingsModel.Headline"></InputText>
+                <RadzenTextBox @bind-Value="_settingsModel.Headline"></RadzenTextBox>
             </label><br />
-            <label class="font-weight-bold">
-                Details Text: &nbsp;
-                <InputTextArea @bind-Value="@_settingsModel.Details"></InputTextArea>
+            <label class="font-weight-bold my-2">
+                <span class="align-top">Details Text: &nbsp;</span>
+                <RadzenTextArea @bind-Value="@_settingsModel.Details" Cols="40"></RadzenTextArea>
             </label><br />
-            <label class="font-weight-bold">
+            <label class="font-weight-bold my-2">
                 Show Countdown: &nbsp;
-                <InputCheckbox @bind-Value="@_settingsModel.ShowCountdown"></InputCheckbox>
+                <RadzenCheckBox @bind-Value="@_settingsModel.ShowCountdown"></RadzenCheckBox>
             </label><br />
             @if (_settingsModel.ShowCountdown)
             {
-                <label class="font-weight-bold">
+                <label class="font-weight-bold my-2">
                     Countdown Title: &nbsp;
-                    <InputText @bind-Value="@_settingsModel.CountdownTitle"></InputText>
+                    <RadzenTextBox @bind-Value="@_settingsModel.CountdownTitle"></RadzenTextBox>
                 </label><br />
+
+                <label class="font-weight-bold my-2">
+                    Countdown until: &nbsp;
+                    <span class="text-dark">
+                        <RadzenDatePicker @bind-Value="_settingsModel.CountdownUntil" ShowTime="true" Style="max-width:90%"></RadzenDatePicker>
+                    </span>
+                </label>
+                <button class="btn btn-info" type="button" @onclick="@(() =>
+                                                                          {
+                                                                              _settingsModel.CountdownUntil = DateTime.Now;
+                                                                          })">
+                    Now
+                </button>
             }
 
             <span style="display: flex; justify-content: flex-end; width: 100%; padding: 0;">
                 <button class="btn btn-primary" type="submit">Save</button>
             </span>
-
         </EditForm>
     </div>
 </div>
@@ -67,6 +80,12 @@
         if (dbSettings != null)
         {
             _settingsModel = Mapper.Map<DisplayFrontPageSettingsModel>(dbSettings);
+            if (_settingsModel.CountdownUntil == null || _settingsModel.CountdownUntil == DateTime.MinValue)
+            {
+                var tz = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
+                var centralTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, tz);
+                _settingsModel.CountdownUntil = centralTime;
+            }
         }
 
         await base.OnParametersSetAsync();

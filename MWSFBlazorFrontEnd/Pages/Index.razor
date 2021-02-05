@@ -1,7 +1,6 @@
 ﻿@page "/MWSFHome"
 @page "/"
 @using AutoMapper
-@using MWSFBlazorDemo.Data.DummyDataAccess
 @using MWSFBlazorFrontEnd.Models.FrontPage
 @using MWSFDataAccess.DataAccess
 @using MWSFDataAccess.DataService.FrontPage
@@ -28,7 +27,7 @@
         </div>
         @if (_settingsModel.ShowCountdown)
         {
-            <Countdown CountDownTitle="@_settingsModel.CountdownTitle"></Countdown>
+            <Countdown CountDownTitle="@_settingsModel.CountdownTitle" EndTime="_settingsModel.CountdownUntil ?? DateTime.Now"></Countdown>
         }
     </div>
 </div>

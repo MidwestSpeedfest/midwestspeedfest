@@ -1,20 +1,24 @@
 ﻿@using System.Reflection.Metadata
 @using System.Runtime.CompilerServices
+@using System.Timers
 
+@if (_remainingTime.Seconds >= 0)
+{
+    <div id="countDown" class="countDown col-12">
+        @if (string.IsNullOrWhiteSpace(CountDownTitle) == false)
+        {
+            <h1>@CountDownTitle</h1>
+        }
+        @foreach (var countDownLabel in _countDownLabelsDictionary)
+        {
+            <div class="col-auto countDownBox">
+                <span id="@(countDownLabel.Key.ToLower())">@countDownLabel.Value</span>
+                <div class="countdownLabel">@countDownLabel.Key</div>
+            </div>
+        }
+    </div>
+}
 
-<div id="countDown" class="countDown col-12">
-    @if (string.IsNullOrWhiteSpace(CountDownTitle) == false)
-    {
-        <h1>@CountDownTitle</h1>
-    }
-    @foreach (var countDownLabel in _countDownLabels)
-    {
-        <div class="col-auto countDownBox">
-            <span id="@(countDownLabel.ToLower())"></span>
-            <div class="countdownLabel">@countDownLabel</div>
-        </div>
-    }
-</div>
 
 @code {
     [Parameter]
@@ -23,6 +27,51 @@
     [Parameter]
     public DateTime EndTime { get; set; }
 
-    private readonly string[] _countDownLabels = {"Days", "Hours", "Minutes", "Seconds"};
+    private Timer _timer;
+    private TimeSpan _remainingTime;
+
+    private readonly Dictionary<string, int> _countDownLabelsDictionary = new Dictionary<string, int>()
+    {
+        {"Days", 0},
+        {"Hours", 0},
+        {"Minutes", 0},
+        {"Seconds", 0}
+    };
+
+    protected override Task OnParametersSetAsync()
+    {
+        if (EndTime != DateTime.MinValue)
+        {
+            _remainingTime = EndTime - DateTime.Now;
+
+
+            _timer = new Timer(1000); //Counts down every second
+            _timer.Elapsed += ProcessCountDown;
+            _timer.Start();
+
+            UpdateCountDownLabelsDict();
+        }
+
+        return base.OnParametersSetAsync();
+    }
+
+    private void ProcessCountDown(Object source, ElapsedEventArgs e)
+    {
+        _remainingTime = EndTime - DateTime.Now;
+        UpdateCountDownLabelsDict();
+        InvokeAsync(StateHasChanged);
+        if (_remainingTime.Seconds < 0)
+        {
+            _timer.Stop();
+        }
+    }
+
+    private void UpdateCountDownLabelsDict()
+    {
+        _countDownLabelsDictionary["Days"] = _remainingTime.Days;
+        _countDownLabelsDictionary["Hours"] = _remainingTime.Hours;
+        _countDownLabelsDictionary["Minutes"] = _remainingTime.Minutes;
+        _countDownLabelsDictionary["Seconds"] = _remainingTime.Seconds;
+    }
 
 }
