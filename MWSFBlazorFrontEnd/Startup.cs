@@ -16,10 +16,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using MWSFBlazorDemo.Data.DummyDataAccess;
 using MWSFBlazorFrontEnd.Helpers.AutoMapper;
 using MWSFDataAccess.DataAccess;
 using MWSFDataAccess.DataService.FrontPage;
+
 
 namespace MWSFBlazorFrontEnd
 {
@@ -39,14 +41,26 @@ namespace MWSFBlazorFrontEnd
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<IdentityUser>(options =>
+                    options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
             services.AddDatabaseDeveloperPageExceptionFilter();
-            services.AddScoped<IDummyDataAccess, DummyDataAccess>();
+            /*Packages*/
+            services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
+            /*Oauth*/
+            services.AddAuthentication()
+                .AddDiscord(options =>
+                {
+                    options.ClientId = Configuration["Authentication:Discord:ClientId"];
+                    options.ClientSecret = Configuration["Authentication:Discord:ClientSecret"];
+                    options.Scope.Add("identify");
+                    options.Scope.Add("guilds");
+                });
+            /*MWSF stuff*/
             services.AddSingleton<ISqlDataAccess, SqlDataAccess>();
             services.AddSingleton<IFrontPageDataService, FrontPageSqlDataService>();
         }

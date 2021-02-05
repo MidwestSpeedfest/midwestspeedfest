@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MWSFBlazorFrontEnd", "MWSFB
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "MWSFDB", "MWSF_DB\MWSFDB.sqlproj", "{7CB93F67-45BF-46DF-A536-85DBA23CF0CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MWSFDataAccess", "MWSFDataAccess\MWSFDataAccess.csproj", "{06036C77-ACB1-47C4-8E3D-1B3594BB4F3E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MWSFDataAccess", "MWSFDataAccess\MWSFDataAccess.csproj", "{06036C77-ACB1-47C4-8E3D-1B3594BB4F3E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
