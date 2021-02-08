@@ -16,11 +16,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using MWSFBlazorDemo.Data.DummyDataAccess;
 using MWSFBlazorFrontEnd.Helpers.AutoMapper;
 using MWSFDataAccess.DataAccess;
 using MWSFDataAccess.DataService.FrontPage;
+using Radzen;
 
 
 namespace MWSFBlazorFrontEnd
@@ -51,6 +50,11 @@ namespace MWSFBlazorFrontEnd
             services.AddDatabaseDeveloperPageExceptionFilter();
             /*Packages*/
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
+            /*Radzen*/
+            services.AddScoped<DialogService>();
+            services.AddScoped<NotificationService>();
+            services.AddScoped<TooltipService>();
+            services.AddScoped<ContextMenuService>();
             /*Oauth*/
             services.AddAuthentication()
                 .AddDiscord(options =>

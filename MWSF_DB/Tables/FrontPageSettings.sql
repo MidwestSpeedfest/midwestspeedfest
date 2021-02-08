@@ -5,8 +5,7 @@
     [Modified] Datetime2,
     [Author] NVARCHAR(50),
     [ShowLogo] BIT NOT NULL, 
-    [Headline] NVARCHAR(MAX) NULL, 
-    [Details] NVARCHAR(MAX) NULL, 
+    [HtmlContent] NVARCHAR(MAX) NULL, 
     [ShowCountdown] BIT NOT NULL, 
     [CountdownTitle] NVARCHAR(MAX) NULL, 
     [CountdownUntil] DATETIME2 NULL

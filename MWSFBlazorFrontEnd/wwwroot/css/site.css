@@ -232,9 +232,9 @@ a:hover {
     border-color: #1861ac;
 }
 
-body {
+/*body {
     color: #ffffff
-}
+}*/
 
 /*Upcoming Events stuff*/
 .upcoming-events-card {
@@ -248,7 +248,7 @@ body {
 }
 
 /*Countdown Timer*/
-h1 {
+countDown > h1 {
     color: #FFF;
     font-weight: 100;
     font-size: 40px;

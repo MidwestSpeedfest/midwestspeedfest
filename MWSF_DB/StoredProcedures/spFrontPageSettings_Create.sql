@@ -2,8 +2,7 @@
 	@Author NVARCHAR(50),
 
 	@ShowLogo bit,
-    @Headline NVARCHAR(MAX),
-	@Details NVARCHAR(MAX),
+	@HtmlContent NVARCHAR(MAX),
 	
 	@ShowCountdown bit,
 	@CountdownTitle NVARCHAR(MAX),
@@ -11,7 +10,7 @@
 AS
 BEGIN
 	set nocount on
-	insert into dbo.FrontPageSettings(Author, ShowLogo, Headline, Details, ShowCountdown, CountdownTitle, CountdownUntil)
-	values(@Author, @ShowLogo, @Headline, @Details, @ShowCountdown, @CountdownTitle, @CountdownUntil)
+	insert into dbo.FrontPageSettings(Author, ShowLogo, HtmlContent, ShowCountdown, CountdownTitle, CountdownUntil)
+	values(@Author, @ShowLogo, @HtmlContent, @ShowCountdown, @CountdownTitle, @CountdownUntil)
 
 END

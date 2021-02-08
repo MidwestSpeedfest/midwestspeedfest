@@ -1,77 +1,90 @@
 ﻿@page "/admin/edithomepage"
+@using System.Security.Claims
 @using AutoMapper
 @using MWSFBlazorFrontEnd.Models.FrontPage
 @using MWSFDataAccess.DataService.FrontPage
 
+@inject AuthenticationStateProvider AuthenticationStateProvider
 @inject IFrontPageDataService DataService
 @inject IMapper Mapper
 
-<h2>Edit homepage</h2>
+<div class="text-white">
+    <h2 class="">Edit homepage</h2>
 
-@if (_showFeedback)
-{
-    <div class="row" id="indexSettingsFeedback">
-        <div class=@($"{_feedbackCss} col-md-5 font-weight-bold")>
-            @_feedbackMessage
+
+    @if (_showFeedback)
+    {
+        <div class="row" id="indexSettingsFeedback">
+            <div class=@($"{_feedbackCss} col-md-5 font-weight-bold")>
+                @_feedbackMessage
+            </div>
+        </div>
+    }
+    <div class="row" id="indexSettings">
+        <div class="opacity-50-dark p-3 col-md-5">
+
+            <EditForm Model="@_editModel" OnSubmit="@HandleOnSubmit">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+                <label class="font-weight-bold my-2">
+                    Show Logo: &nbsp;
+                    <RadzenCheckBox @bind-Value="_editModel.ShowLogo"></RadzenCheckBox>
+                </label> <br />
+                <div id="htmlContent">
+                    <label class="font-weight-bold my-2" for="htmlEditor">
+                        Details Text: &nbsp;
+                    </label>
+                    <RadzenHtmlEditor id="htmlEditor" class="text-dark" @bind-Value="@_editModel.HtmlContent" Cols="40"></RadzenHtmlEditor>
+                </div>
+                <label class="font-weight-bold my-2">
+                    Show Countdown: &nbsp;
+                    <RadzenCheckBox @bind-Value="@_editModel.ShowCountdown"></RadzenCheckBox>
+                </label><br />
+                @if (_editModel.ShowCountdown)
+                {
+                    <label class="font-weight-bold my-2">
+                        Countdown Title: &nbsp;
+                        <RadzenTextBox @bind-Value="@_editModel.CountdownTitle"></RadzenTextBox>
+                    </label><br />
+
+                    <label class="font-weight-bold my-2">
+                        Countdown until: &nbsp;
+                        <span class="text-dark">
+                            <RadzenDatePicker @bind-Value="_editModel.CountdownUntil" ShowTime="true" Style="max-width: 90%"></RadzenDatePicker>
+                        </span>
+                    </label>
+                    <button class="btn btn-info" type="button" @onclick="@(() =>
+                                                                         {
+                                                                             _editModel.CountdownUntil = DateTime.Now;
+                                                                         })">
+                        Now
+                    </button>
+                }
+                <span style="display: flex; justify-content: flex-end; width: 100%; padding: 0;">
+                    <button class="btn btn-success" type="button" @onclick="UpdateAndShowDemo">@GetDemoButtonText()</button>
+                    <button class="btn btn-primary" type="submit">Save</button>
+                </span>
+            </EditForm>
         </div>
     </div>
-}
-<div class="row" id="indexSettings">
-      <div class="opacity-50-dark p-3 col-md-5">
-
-        <EditForm Model="@_settingsModel" OnSubmit="@HandleOnSubmit">
-            <DataAnnotationsValidator />
-            <ValidationSummary />
-            <label class="font-weight-bold my-2">
-                Show Logo: &nbsp;
-                <RadzenCheckBox @bind-Value="_settingsModel.ShowLogo"></RadzenCheckBox>
-            </label> <br />
-            <label class="font-weight-bold my-2">
-                Headline Text:
-                <RadzenTextBox @bind-Value="_settingsModel.Headline"></RadzenTextBox>
-            </label><br />
-            <label class="font-weight-bold my-2">
-                <span class="align-top">Details Text: &nbsp;</span>
-                <RadzenTextArea @bind-Value="@_settingsModel.Details" Cols="40"></RadzenTextArea>
-            </label><br />
-            <label class="font-weight-bold my-2">
-                Show Countdown: &nbsp;
-                <RadzenCheckBox @bind-Value="@_settingsModel.ShowCountdown"></RadzenCheckBox>
-            </label><br />
-            @if (_settingsModel.ShowCountdown)
-            {
-                <label class="font-weight-bold my-2">
-                    Countdown Title: &nbsp;
-                    <RadzenTextBox @bind-Value="@_settingsModel.CountdownTitle"></RadzenTextBox>
-                </label><br />
-
-                <label class="font-weight-bold my-2">
-                    Countdown until: &nbsp;
-                    <span class="text-dark">
-                        <RadzenDatePicker @bind-Value="_settingsModel.CountdownUntil" ShowTime="true" Style="max-width:90%"></RadzenDatePicker>
-                    </span>
-                </label>
-                <button class="btn btn-info" type="button" @onclick="@(() =>
-                                                                          {
-                                                                              _settingsModel.CountdownUntil = DateTime.Now;
-                                                                          })">
-                    Now
-                </button>
-            }
-
-            <span style="display: flex; justify-content: flex-end; width: 100%; padding: 0;">
-                <button class="btn btn-primary" type="submit">Save</button>
-            </span>
-        </EditForm>
-    </div>
 </div>
+
+@if (_showDemo)
+{
+    <h1 class="text-white">Demo:</h1>
+    <button class="btn btn-warning" @onclick="HideDemo">Hide</button>
+    <Index DemoModel="_editModel"></Index>
+}
 
 
 @code {
     private DisplayFrontPageSettingsModel _settingsModel = new DisplayFrontPageSettingsModel();
+    private DisplayFrontPageSettingsModel _editModel = new DisplayFrontPageSettingsModel();
     private bool _showFeedback;
     private string _feedbackMessage;
     private string _feedbackCss;
+
+    private bool _showDemo;
 
     protected override async Task OnParametersSetAsync()
     {
@@ -88,14 +101,43 @@
             }
         }
 
+        _editModel = _settingsModel;
+
         await base.OnParametersSetAsync();
+    }
+
+    private void HideDemo()
+    {
+        _showDemo = false;
+    }
+
+    private void ShowDemo()
+    {
+        _showDemo = true;
+    }
+
+    private void UpdateAndShowDemo()
+    {
+        //This might be a really lazy hack
+        HideDemo();
+        ShowDemo();
+    }
+
+    private string GetDemoButtonText()
+    {
+        return _showDemo ? "Update Demo" : "Show Demo";
     }
 
     private async Task HandleOnSubmit()
     {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var author = authState.User;
+
+        _settingsModel = _editModel;
         _showFeedback = true;
         try
         {
+            _settingsModel.Author = author.FindFirst(c => c.Type == ClaimTypes.Name)?.Value;
             await DataService.SaveFrontPageSettings(_settingsModel);
             _feedbackCss = "alert-success";
             _feedbackMessage = "Settings saved successfully!";

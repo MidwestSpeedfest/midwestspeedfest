@@ -1,0 +1,36 @@
+﻿@page "/htmlSandbox"
+
+<h3>HTML ContentSandbox</h3>
+
+<RadzenHtmlEditor UploadUrl="upload/image" @bind-Value="_editHtml">
+
+</RadzenHtmlEditor>
+
+<div>
+    <button class="btn btn-success" @onclick="UpdateDisplayHtml">
+        <span class="oi oi-loop-circular"></span>
+        Update 
+    </button>
+</div>
+
+@if (string.IsNullOrEmpty(_displayHtml) != true)
+{
+    <div class="text-white">
+        @GetDispalyHtml()
+    </div>
+}
+
+@code {
+    string _editHtml = new string("");
+    string _displayHtml = new string("");
+
+    private void UpdateDisplayHtml()
+    {
+        _displayHtml = _editHtml;
+    }
+
+    private MarkupString GetDispalyHtml()
+    {
+        return (MarkupString)_displayHtml;
+    }
+}

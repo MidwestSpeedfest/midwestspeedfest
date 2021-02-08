@@ -34,8 +34,7 @@ namespace MWSFDataAccess.DataService.FrontPage
                 settings.Author,
 
                 settings.ShowLogo,
-                settings.Headline,
-                settings.Details,
+                settings.HtmlContent,
 
                 settings.ShowCountdown,
                 settings.CountdownTitle,
