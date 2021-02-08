@@ -15,8 +15,7 @@ namespace MWSFBlazorFrontEnd.Models.FrontPage
         public string Author { get; set; }
 
         public bool ShowLogo { get; set; }
-        public string Headline { get; set; }
-        public string Details { get; set; }
+        public string HtmlContent { get; set; }
 
         public bool ShowCountdown { get; set; }
         public string CountdownTitle { get; set; }
