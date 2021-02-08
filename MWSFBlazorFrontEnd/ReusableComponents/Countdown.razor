@@ -9,13 +9,16 @@
         {
             <h1>@CountDownTitle</h1>
         }
+
         @foreach (var countDownLabel in _countDownLabelsDictionary)
         {
-            <div class="col-auto countDownBox">
+            <div class="col-auto countDownBox mx-2">
                 <span id="@(countDownLabel.Key.ToLower())">@countDownLabel.Value</span>
                 <div class="countdownLabel">@countDownLabel.Key</div>
             </div>
         }
+        <br/>
+
     </div>
 }
 
