@@ -69,5 +69,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="MWSFDB.publish.xml" />
+    <None Include="MWSFDB_Staging.publish.xml" />
   </ItemGroup>
 </Project>
