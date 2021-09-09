@@ -16,6 +16,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using MWSFBlazorFrontEnd.Areas.Services;
 using MWSFBlazorFrontEnd.Helpers.AutoMapper;
 using MWSFDataAccess.DataAccess;
 using MWSFDataAccess.DataService.FrontPage;
@@ -39,7 +41,7 @@ namespace MWSFBlazorFrontEnd
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                    Configuration.GetConnectionString("MwsfDb")));
             services.AddDefaultIdentity<IdentityUser>(options =>
                     options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole>()
@@ -64,6 +66,8 @@ namespace MWSFBlazorFrontEnd
                     options.Scope.Add("identify");
                     options.Scope.Add("guilds");
                 });
+            /*Identity Stuff*/
+            services.AddTransient<IEmailSender, IdentityEmailSender>();
             /*MWSF stuff*/
             services.AddSingleton<ISqlDataAccess, SqlDataAccess>();
             services.AddSingleton<IFrontPageDataService, FrontPageSqlDataService>();

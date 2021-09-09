@@ -58,6 +58,7 @@
     <Folder Include="Properties" />
     <Folder Include="Tables" />
     <Folder Include="StoredProcedures" />
+    <Folder Include="Tables\IdentityFramework" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\FrontPageSettings.sql" />

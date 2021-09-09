@@ -1,0 +1,54 @@
+﻿@page "/SeedRoles"
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.Extensions.Configuration
+@using MWSFBlazorFrontEnd.Data.Constants
+
+@inject RoleManager<IdentityRole> roleManager
+@inject UserManager<IdentityUser> userManager
+@inject IConfiguration config
+
+<div class="opacity-50-dark">
+    <h1 class="text-@css">@message</h1>
+</div>
+
+
+@code {
+    private string message = "hi";
+    private string css = "info";
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await SeedTheThings();
+    }
+
+    private async Task SeedTheThings()
+    {
+        message = "Seeding..";
+        css = "info";
+        try
+        {
+
+            foreach (var roleName in Constants.RoleNamesList)
+            {
+                await roleManager.CreateAsync(new IdentityRole(roleName));
+            }
+
+            var initialAdmin = await userManager.FindByEmailAsync(config.GetValue<string>("DefaultAdmin"));
+
+            if (initialAdmin != null)
+            {
+                await userManager.AddToRolesAsync(initialAdmin, Constants.RoleNamesList);
+            }
+
+            message = "seeding complete!";
+            css = "success";
+        }
+        catch (Exception e)
+        {
+            message = e.Message;
+            css = "warning";
+        }
+
+    }
+
+}
