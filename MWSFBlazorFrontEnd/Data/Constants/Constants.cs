@@ -1,30 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace MWSFBlazorFrontEnd.Data.Constants
 {
     public static class Constants
     {
-        internal static class RoleNames
+        internal static readonly List<string> RoleNamesList;
+
+        static Constants()
         {
-            internal const string Admin = "Admin";
-            internal const string Staff = "Staff";
-            internal const string Volunteer = "Volunteer";
-            internal const string Runner = "Runner";
+            //Dynamically scale list of role names as they are added
+            var fields = typeof(RoleNames).GetFields();
+            RoleNamesList = new List<string>();
+            foreach (var fieldInfo in fields)
+            {
+                RoleNamesList.Add(fieldInfo.GetValue(typeof(RoleNames)).ToString());
+            }
         }
 
-        public static readonly List<string> RoleNamesList = new List<string>  
+        internal static class RoleNames
         {
-            RoleNames.Admin,
-            RoleNames.Staff,
-            RoleNames.Volunteer,
-            RoleNames.Runner
-        };
+            //These are public to so they can be used in Reflection
+            public const string Admin = "Admin";
+            public const string Staff = "Staff";
+            public const string Volunteer = "Volunteer";
+            public const string Runner = "Runner";
+        }
 
-        public const string AdminLevelRoles = RoleNames.Admin + "," + RoleNames.Staff;
-        public const string VolunteerAndUp = AdminLevelRoles + "," + RoleNames.Volunteer;
-        public static readonly string RunnerAndUp = VolunteerAndUp + "," + RoleNames.Runner;
+        internal const string AdminLevelRoles = RoleNames.Admin + "," + RoleNames.Staff;
+        internal const string VolunteerAndUp = AdminLevelRoles + "," + RoleNames.Volunteer;
+        internal const string RunnerAndUp = VolunteerAndUp + "," + RoleNames.Runner;
     }
 }
