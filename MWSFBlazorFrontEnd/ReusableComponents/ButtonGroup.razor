@@ -1,0 +1,44 @@
+﻿<div>
+    @foreach (var button in _buttonNames)
+    {
+        <button class=@GetCss(button) @onclick="() => SetSelected(button)">@button</button>
+    }
+</div>
+
+@code {
+
+    private List<string> _buttonNames = new List<string>();
+    private string _selectedButtonName = "";
+
+    [Parameter]
+    public List<string> ButtonNames { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnSelected { get; set; }
+
+    [Parameter]
+    public string SelectedCSS { get; set; }
+
+    [Parameter]
+    public string UnselectedCSS { get; set; }
+
+    protected override Task OnParametersSetAsync()
+    {
+        SelectedCSS = string.IsNullOrEmpty(SelectedCSS) ? "light" : SelectedCSS;
+        UnselectedCSS = string.IsNullOrEmpty(UnselectedCSS) ? "light" : UnselectedCSS;
+        _buttonNames = ButtonNames;
+        return base.OnParametersSetAsync();
+    }
+
+    private void SetSelected(string selectedName)
+    {
+        _selectedButtonName = selectedName;
+        OnSelected.InvokeAsync(selectedName);
+    }
+
+    private string GetCss(string buttonName)
+    {
+        return buttonName == _selectedButtonName ? $"btn btn-{SelectedCSS} m-1" : $"btn btn-outline-{UnselectedCSS} m-1";
+    }
+
+}

@@ -1,0 +1,68 @@
+﻿@using Microsoft.AspNetCore.Routing.Matching
+<ul class="@_navCss" role="tablist">
+    @foreach (var tab in _tabs)
+    {
+        var active = tab.Key == activeKey && tab.Value == activeValue;
+
+        <li class="nav-item" @onclick="() => _hideTabContents = false">
+            <a class=@($"nav-link  {(active ? "active" : "")}") id=@($"{tab.Key}_tab") data-toggle="tab" href=@($"#{tab.Key}") role="tab"
+               aria-selected="@active.ToString()" aria-controls="@tab.Key">@tab.Key</a>
+        </li>
+    }
+</ul>
+@if (_hideTabContents == false)
+{
+    <div class="tab-content">
+        @foreach (var tab in _tabs)
+        {
+            var active = tab.Key == activeKey && tab.Value == activeValue;
+            <div class=@($"tab-pane fade  {(active ? "show active" : "")}") id=@tab.Key role="tabpanel" aria-labelledby=@($"{tab.Key}_tab")>
+                <ButtonGroup ButtonNames="@tab.Value" OnSelected="OnSelected" />
+            </div>
+        }
+    </div>
+}
+
+@code
+{
+    private string _navCss = "";
+    private Dictionary<string, List<string>> _tabs = new Dictionary<string, List<string>>();
+    private string activeKey = "";
+    private List<string> activeValue = new List<string>();
+    private bool _hideTabContents = false;
+
+    /// <summary>
+    /// Css for the nav group. Defaults to "nav nav-tabs"
+    /// </summary>
+    [Parameter]
+    public string NavCss { get; set; }
+
+    /// <summary>
+    /// The tabs & content for each
+    /// </summary>
+    [Parameter]
+    public Dictionary<string, List<string>> Tabs { get; set; }
+
+    [Parameter]
+    public bool HideTabContents { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnSelected { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        _navCss = "";
+        _navCss += string.IsNullOrEmpty(NavCss) ? "nav nav-tabs" : NavCss;
+        _tabs = new Dictionary<string, List<string>>();
+        if (Tabs.Count > 0)
+        {
+            _tabs = Tabs;
+            activeKey = Tabs.FirstOrDefault().Key;
+            activeValue = Tabs.FirstOrDefault().Value;
+        }
+        _hideTabContents = HideTabContents;
+        base.OnParametersSet();
+    }
+
+
+}
