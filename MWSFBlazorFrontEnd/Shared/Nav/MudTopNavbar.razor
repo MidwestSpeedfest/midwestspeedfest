@@ -8,9 +8,25 @@
         <MudText Typo="Typo.h5">Midwest Speedfest</MudText>
     </a>*@
     <MudSpacer />
-    <span class="ml-auto">
-        <SocialMediaIcons />
-    </span>
+    <MudHidden Breakpoint="@Breakpoint.Xs">
+        <span class="ml-auto">
+            <SocialMediaIcons />
+        </span>
+        <AuthorizeView>
+            <Authorized>
+                <MudSpacer />
+                <MudAvatar Style="@($"color:{Colors.Shades.White};")"> @context.User.Identity.Name.Substring(0, 1)</MudAvatar>
+            </Authorized>
+        </AuthorizeView>
+    </MudHidden>
+    <MudHidden Breakpoint ="@Breakpoint.Xs" Invert="true">
+        <MudMenu Icon="@Icons.Material.Filled.MoreVert" Direction="Direction.Bottom" OffsetY="true" Color="Color.Inherit">
+            <SocialMediaIcons />
+            <MudMenuItem>Profile</MudMenuItem>
+            <MudMenuItem>My account</MudMenuItem>
+            <MudMenuItem>Logout</MudMenuItem>
+        </MudMenu>
+    </MudHidden>
 </MudAppBar>
 
 
