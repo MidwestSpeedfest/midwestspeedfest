@@ -2,8 +2,13 @@
 @*<MudThemeProvider Theme="MudThemes.DefaultMudTheme" />*@
 
 <MudLayout>
-    <MudTopNavbar OnDrawerToggle="HandleDrawerToggle"></MudTopNavbar>
-    <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Anchor="Anchor.Left" Elevation="2" >
+    <MudTopNavbar OnDrawerToggle="HandleDrawerToggle" />
+
+    <MudContainer Class="my-5">
+        @Body
+    </MudContainer>
+
+    <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Anchor="Anchor.Left" Elevation="2">
         <a class="navbar-brand" href="#">
             <span class="sr-only">Return home</span>
             <img src="/Content/Images/MWSF_Logo_NavBar.png" />
@@ -12,11 +17,6 @@
         <NavigationLinks />
         <AdminLinks />
     </MudDrawer>
-
-    <MudContainer Fixed="true" Class="my-3">
-        @Body
-    </MudContainer>
-
 
 </MudLayout>
 

@@ -1,27 +1,19 @@
-﻿<MudAppBar>
+﻿<MudAppBar Elevation="1">
     <MudIconButton Icon="@(_drawerOpen ? Icons.Material.Filled.MenuOpen : Icons.Material.Filled.Menu)" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
     <MudSpacer />
-    @*<MudLink Href="#">
-            <MudText Typo="Typo.h5" Style=@($"color:{Colors.Shades.White}")>Midwest Speedfest</MudText>
-        </MudLink>*@
     <a href="#">
-        <MudText Typo="Typo.h4">Midwest Speedfest</MudText>
+        <MudText Typo="Typo.h5" Style="white-space: nowrap">Midwest Speedfest</MudText>
     </a>
     <MudSpacer />
     <MudHidden Breakpoint="@Breakpoint.Xs">
         <SocialMediaIcons />
     </MudHidden>
-    <MudDivider Vertical="true" Style="height: 70%" />
-    <MudElement Class="ml-5">
-        <LoginDisplay/>
-    </MudElement>
+    <MudDivider Vertical="true" Class="mx-5" Style="height: 70%" />
+    <LoginDisplay/>
     <MudHidden Breakpoint="@Breakpoint.Xs" Invert="true">
         <MudMenu Icon="@Icons.Material.Filled.MoreVert" Direction="Direction.Bottom" OffsetY="true" Color="Color.Inherit">
             <ChildContent>
                 <SocialMediaIcons />
-                <MudMenuItem>Profile</MudMenuItem>
-                <MudMenuItem>My account</MudMenuItem>
-                <MudMenuItem>Logout</MudMenuItem>
             </ChildContent>
         </MudMenu>
     </MudHidden>
