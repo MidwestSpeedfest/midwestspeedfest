@@ -2,13 +2,13 @@
 @*<MudThemeProvider Theme="MudThemes.DefaultMudTheme" />*@
 
 <MudLayout>
-    <MudTopNavbar OnDrawerToggle="HandleDrawerToggle" />
+    <MudTopNavbar OnDrawerToggle="HandleDrawerToggle" DrawerOpen ="_drawerOpen"/>
 
     <MudContainer Class="my-5">
         @Body
     </MudContainer>
 
-    <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Anchor="Anchor.Left" Elevation="2">
+    <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always"  Anchor="Anchor.Left" Elevation="2" >
         <a class="navbar-brand" href="#">
             <span class="sr-only">Return home</span>
             <img src="/Content/Images/MWSF_Logo_NavBar.png" />
@@ -21,6 +21,7 @@
 </MudLayout>
 
 @code {
+    // ReSharper disable once RedundantDefaultMemberInitializer
     bool _drawerOpen = false;
 
     private void HandleDrawerToggle(bool result)

@@ -1,5 +1,6 @@
-﻿<MudAppBar Elevation="1">
-    <MudIconButton Icon="@(_drawerOpen ? Icons.Material.Filled.MenuOpen : Icons.Material.Filled.Menu)" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+﻿@using Microsoft.Data.SqlClient
+<MudAppBar Elevation="1">
+    <MudIconButton Icon="@(DrawerOpen ? Icons.Material.Filled.MenuOpen : Icons.Material.Filled.Menu)" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
     <MudSpacer />
     <a href="#">
         <MudText Typo="Typo.h5" Style="white-space: nowrap">Midwest Speedfest</MudText>
@@ -25,17 +26,18 @@
     [Parameter]
     public EventCallback<bool> OnDrawerToggle { get; set; }
 
-    bool _drawerOpen = false;
+    [Parameter]
+    public bool DrawerOpen { get; set; }
 
     void DrawerToggle()
     {
-        _drawerOpen = !_drawerOpen;
+        DrawerOpen = !DrawerOpen;
         ReturnDrawerState();
     }
 
     private void ReturnDrawerState()
     {
-        OnDrawerToggle.InvokeAsync(_drawerOpen);
+        OnDrawerToggle.InvokeAsync(DrawerOpen);
     }
 
 }
