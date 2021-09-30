@@ -14,22 +14,13 @@
                 <MudListItem Text="Logout" Icon="@Icons.Material.Outlined.Login" Href="/LogOut/" />
             </ChildContent>
         </MudMenu>
-
     </Authorized>
     <NotAuthorized>
         <MudButton Variant="Variant.Outlined"
-                       StartIcon="@Icons.Material.Filled.Login"
-                       IconClass="d-none d-sm-flex"
-                       Link="/login">
-
-                <span style="white-space: nowrap">Log In</span>
+                   StartIcon="@Icons.Material.Filled.Login"
+                   IconClass="d-none d-sm-flex"
+                   Link="/login">
+            <span style="white-space: nowrap">Log In</span>
             </MudButton>
-
-
     </NotAuthorized>
 </AuthorizeView>
-
-@code{
-
-
-}
