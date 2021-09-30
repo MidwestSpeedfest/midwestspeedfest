@@ -1,43 +1,27 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@*@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
-@inject NavigationManager NavigationManager*@
 
 <AuthorizeView>
     <Authorized>
-        <li class="nav-link">
-            <span class="oi oi-person"><a href="Identity/Account/Manage">Hello, @context.User.Identity.Name!</a></span>
-        </li>
-        <li class="nav=link">
-            <a href="/LogOut/">Log Out</a>
-        </li>
-        @*<li>
-                <form method="post" action="/LogOut/">
-                    <button type="submit" class="nav-link btn btn-info">Log out</button>
-                </form>
-            </li>*@
-        <!--<li>
-            <form class="form-inline" action="/LogOut" method="post">
-                <button type="submit" class="nav-link btn btn-info">Logout</button>
-            </form>
-        </li>-->
-        @*<form method="post" action="Identity/Account/LogOut">
-            <button type="submit" class="nav-link btn btn-link">Log out</button>
-        </form><form method="post" action="Identity/Account/LogOut">
-            <button type="submit" class="nav-link btn btn-link">Log out</button>
-        </form>*@
-        @*<li>
-            <button type="button" class="nav-link btn btn-info" @onclick="Logout">Razor Logout</button>
-        </li>*@
+        <MudMenu Direction="Direction.Start" Class="my-5" Dense="true">
+            <ActivatorContent>
+                <MudAvatar Variant="Variant.Outlined">
+                    @context.User.Identity.Name.Substring(0, 1)
+                </MudAvatar>
+            </ActivatorContent>
+            <ChildContent>
+                <MudDivider Class="mb-2" />
+                <MudListItem Text="Account" Icon="@Icons.Material.Outlined.Person" Href="/personal/account" />
+                <MudListItem Text="Logout" Icon="@Icons.Material.Outlined.Login" Href="/LogOut/" />
+            </ChildContent>
+        </MudMenu>
+
     </Authorized>
     <NotAuthorized>
-        @*<li class="nav-link">
-                <a href="Identity/Account/Register">Register</a>
-            </li>*@
-        <li class="nav-link">
-            <a href="Login">Log in</a>
-        </li>
-
+        <MudButton Variant="Variant.Outlined"
+                   StartIcon="@Icons.Material.Filled.Login"
+                   Link="/login">
+            Log In
+        </MudButton>
     </NotAuthorized>
 </AuthorizeView>
 
