@@ -64,6 +64,13 @@
     <Build Include="Tables\FrontPageSettings.sql" />
     <Build Include="StoredProcedures\spFrontPageSettings_Create.sql" />
     <Build Include="StoredProcedures\spFrontPageSettings_ReadNewest.sql" />
+    <Build Include="Tables\IdentityFramework\AspNetRoleClaims.sql" />
+    <Build Include="Tables\IdentityFramework\AspNetRoles.sql" />
+    <Build Include="Tables\IdentityFramework\AspNetUserClaims.sql" />
+    <Build Include="Tables\IdentityFramework\AspNetUserLogins.sql" />
+    <Build Include="Tables\IdentityFramework\AspNetUserRoles.sql" />
+    <Build Include="Tables\IdentityFramework\AspNetUsers.sql" />
+    <Build Include="Tables\IdentityFramework\AspNetUserTokens.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="MWSFDB.refactorlog" />
