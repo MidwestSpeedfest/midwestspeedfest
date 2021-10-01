@@ -1,20 +1,22 @@
 ﻿<div class="opacity-10-dark">
     <MudNavMenu Class="mud-width-full">
-        <MudNavGroup Title="Administration" Icon="@Icons.Filled.AdminPanelSettings">
-            <MudNavGroup Title="Site Admin" Icon="@Icons.Filled.Settings">
-                <MudNavLink Href="/admin/edithomepage" Icon="@Icons.Filled.Home">Edit Homepage</MudNavLink>
+        <AuthorizeView Roles=@Constants.AdminLevelRoles>
+            <MudNavGroup Title="Administration" Icon="@Icons.Filled.AdminPanelSettings">
+                <MudNavGroup Title="Site Admin" Icon="@Icons.Filled.Settings">
+                    <MudNavLink Href="/admin/edithomepage" Icon="@Icons.Filled.Home">Edit Homepage</MudNavLink>
+                </MudNavGroup>
+                <MudNavGroup Title="User Admin" Icon="@Icons.Filled.People">
+                    <MudNavLink Href="admin/usermanager" Icon="@Icons.Filled.ManageAccounts">User Manager</MudNavLink>
+                    <MudNavLink Href="#" Icon="@Icons.Filled.Hail">Roles</MudNavLink>
+                </MudNavGroup>
+                <MudNavGroup Title="Event Admin" Icon="@Icons.Filled.EmojiEvents">
+                    <MudNavLink Href="#" Icon="@Icons.Filled.Event">Manage Events</MudNavLink>
+                    <MudNavLink Href="#" Icon="@Icons.Filled.Schedule">Create Schedule</MudNavLink>
+                    <MudNavLink Href="#" Icon="@Icons.Filled.TaskAlt">Assign Volunteers</MudNavLink>
+                    <MudNavLink Href="#" Icon="@Icons.Outlined.RunCircle">Assign Runs to Rate</MudNavLink>
+                </MudNavGroup>
             </MudNavGroup>
-            <MudNavGroup Title="User Admin" Icon="@Icons.Filled.People">
-                <MudNavLink Href="admin/usermanager" Icon="@Icons.Filled.ManageAccounts" >User Manager</MudNavLink>
-                <MudNavLink Href="#" Icon="@Icons.Filled.Hail">Roles</MudNavLink>
-            </MudNavGroup>
-            <MudNavGroup Title="Event Admin" Icon="@Icons.Filled.EmojiEvents" Expanded="true">
-                <MudNavLink Href="#" Icon="@Icons.Filled.Event" >Manage Events</MudNavLink>
-                <MudNavLink Href="#" Icon="@Icons.Filled.Schedule" >Create Schedule</MudNavLink>
-                <MudNavLink Href="#" Icon="@Icons.Filled.TaskAlt" >Assign Volunteers</MudNavLink>
-                <MudNavLink Href="#" Icon="@Icons.Outlined.RunCircle" >Assign Runs to Rate</MudNavLink>
-            </MudNavGroup>
-        </MudNavGroup>
+        </AuthorizeView>
         <MudDivider Class="my-2" />
         <MudNavLink Href="https://www.speedrun.com/midwest_speedfest" Icon="@Icons.Filled.EmojiPeople">Staff</MudNavLink>
         <MudNavLink Href="/ContactUs" Icon="@Icons.Filled.Mail">Contact Us</MudNavLink>
