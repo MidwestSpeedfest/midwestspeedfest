@@ -71,11 +71,34 @@ a.navbar-brand {
     /*word-break: break-all;*/
 }
 
-/*50% opacity dark background for use throughout the site*/
+
+/*various opacity dark backgrounds for text contrast / accessibility use throughout the site*/
+.opacity-75-dark {
+    background: #7f7f7f; /*for IE 8 plebs I guess*/
+    background: rgba(0,0,0,0.75);
+}
+
 .opacity-50-dark {
     background: #7f7f7f; /*for IE 8 plebs I guess*/
     background: rgba(0,0,0,0.5);
 }
+
+
+.opacity-25-dark {
+    background: #7f7f7f; /*for IE 8 plebs I guess*/
+    background: rgba(0,0,0,0.25);
+}
+
+.opacity-10-dark {
+    background: #7f7f7f; /*for IE 8 plebs I guess*/
+    background: rgba(0,0,0,0.1);
+}
+
+.opacity-5-dark {
+    background: #7f7f7f; /*for IE 8 plebs I guess*/
+    background: rgba(0,0,0,0.05);
+}
+
 
 
 /* Provide sufficient contrast against blue background */

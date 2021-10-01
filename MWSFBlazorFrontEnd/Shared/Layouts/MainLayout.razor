@@ -9,13 +9,10 @@
     </MudContainer>
 
     <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always"  Anchor="Anchor.Left" Elevation="2" >
-        <a class="navbar-brand" href="#">
-            <span class="sr-only">Return home</span>
-            <img src="/Content/Images/MWSF_Logo_NavBar.png" />
-        </a>
-        <LoginDisplay />
-        <NavigationLinks />
-        <AdminLinks />
+        <MudDrawerHeader>
+            <img src="Content/Images/MWSF_Logo.png" class="img-fluid" alt="Midwest Speedfest Logo">
+        </MudDrawerHeader>
+        <MainNavMenu />
     </MudDrawer>
 
 </MudLayout>
