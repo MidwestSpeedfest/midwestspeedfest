@@ -10,8 +10,17 @@
             </ActivatorContent>
             <ChildContent>
                 <MudDivider Class="mb-2" />
-                <MudListItem Text="Account" Icon="@Icons.Material.Outlined.Person" Href="/personal/account" />
-                <MudListItem Text="Logout" Icon="@Icons.Material.Outlined.Login" Href="/LogOut/" />
+                @*This is a "temporary" hack since the Link attribute for MudListItem isn't playing nice with Identity Framework*@
+                <MudListItem>
+                    <MudButton Link="/Identity/Account/Manage" StartIcon="@Icons.Material.Outlined.Person">
+                        <span style="white-space: nowrap">Manage Account</span>
+                    </MudButton>
+                </MudListItem>
+                <MudListItem>
+                    <MudButton Link="/LogOut/" StartIcon="@Icons.Material.Outlined.Person">
+                        <span style="white-space: nowrap">Logout</span>
+                    </MudButton>
+                </MudListItem>
             </ChildContent>
         </MudMenu>
     </Authorized>
