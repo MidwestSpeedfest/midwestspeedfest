@@ -30,6 +30,7 @@
     <Folder Include="Helpers\Extensions\" />
     <Folder Include="wwwroot\Content\Images\Icons\" />
     <Folder Include="wwwroot\Content\UploadedImages\" />
+    <Folder Include="wwwroot\lib\" />
   </ItemGroup>
 
 </Project>

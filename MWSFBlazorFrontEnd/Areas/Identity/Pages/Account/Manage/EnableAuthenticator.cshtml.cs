@@ -148,7 +148,7 @@ namespace MWSFBlazorFrontEnd.Areas.Identity.Pages.Account.Manage
         {
             return string.Format(
                 AuthenticatorUriFormat,
-                _urlEncoder.Encode("MWSFBlazorFrontEnd"),
+                _urlEncoder.Encode("Midwest Speedfest"),
                 _urlEncoder.Encode(email),
                 unformattedKey);
         }
