@@ -139,7 +139,10 @@ a:hover {
 }
 
 body {
-    color: #ffffff
+    color: #ffffff; 
+    background: url("../Content/Images/BG_BlueTriangles.png") repeat 0 0;
+    background-attachment: fixed;
+    background-repeat: no-repeat
 }
 
 /*Upcoming Events stuff*/
