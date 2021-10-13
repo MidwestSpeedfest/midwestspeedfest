@@ -1,15 +1,14 @@
 ﻿@page "/Admin/UserManager"
 
 @using Microsoft.AspNetCore.Identity
-@using MWSFBlazorFrontEnd.Data.Constants
-@inject UserManager<IdentityUser> userManager
+@inject UserManager<IdentityUser> _userManager
 
 @attribute [Authorize(Roles=Constants.AdminLevelRoles)]
 
 
 <h1>User Manager</h1>
 
-<h2>@message</h2>
+@*<h2>@message</h2>
 
 <div id="roleFilter" class="opacity-50-dark">
     <div id="RoleButtons" class="row my-1 py-2">
@@ -17,56 +16,71 @@
         <div class=" col-auto ml-auto"><button class="btn btn-primary" @onclick="@HandleShowAll">Clear Filters</button></div>
     </div>
     <ButtonGroup ButtonNames="_roleTabs" OnSelected="HandleSelectedRole"></ButtonGroup>
-</div>
+</div>*@
 
-<MudTable Items="userModelList" Loading="@(userModelList.Count == 0)" LoadingProgressColor="Color.Info">
+<MudTable Items="_userModelList" Loading="@(_userModelList == null)" LoadingProgressColor="Color.Info">
     <HeaderContent>
         <MudTh>Username</MudTh>
         <MudTh>Roles</MudTh>
-        <MudTh>Make Staff</MudTh>
     </HeaderContent>
     <RowTemplate>
-        <MudTd DataLabel="Username">@context.userName</MudTd>
-        <MudTd DataLabel="Roles">@context.roles</MudTd>
-        <MudTd DataLabel="Make Staff">
-            <button class="btn btn-primary ml-auto" @onclick="() => AddRole(context.user, Constants.RoleNames.Staff)"> Make @Constants.RoleNames.Staff</button>
+        <MudTd DataLabel="Username">@context.UserName</MudTd>
+        <MudTd DataLabel="Roles">            
+            <MudChipSet MultiSelection="true" @bind-SelectedChips="@context.SelectedRoles" Filter="true">
+                @foreach (var roleName in Constants.RoleNamesList)
+                {
+                    <MudChip Color="@_roleColors[roleName]"
+                             Default="@context.Roles.Contains(roleName)"
+                             Text="@roleName"
+                             Variant="Variant.Text">
+                    </MudChip>
+                }
+            </MudChipSet>
         </MudTd>
     </RowTemplate>
 </MudTable>
 
 
-
 @code {
-    private List<string> _roleTabs = new List<string>();
-    private string message = "Nothing selected yet.. ";
-    private List<IdentityUser> users = new List<IdentityUser>();
-    private Dictionary<IdentityUser, IList<string>> RolesPerUserDictionary = new Dictionary<IdentityUser, IList<string>>();
-    private List<userModel> userModelList = new List<userModel>();
+    private List<string> _roleTabs = new();
+    private string _message = "Nothing selected yet.. ";
+    private List<IdentityUser> _users = new();
+    private Dictionary<IdentityUser, IList<string>> _rolesPerUserDictionary = new();
+    private List<UserModel> _userModelList = new();
 
-    private class userModel
+    private readonly Dictionary<string, Color> _roleColors = new()
     {
-        internal IdentityUser user { get; set; }
-        internal string userName { get; set; }
-        internal string roles { get; set; }
+        { "Admin", Color.Warning },
+        { "Staff", Color.Secondary },
+        { "Volunteer", Color.Info },
+        { "Runner", Color.Success},
+    };
+
+    private class UserModel
+    {
+        internal IdentityUser User { get; set; }
+        internal string UserName { get; set; }
+        internal List<string> Roles { get; set; }
+        internal MudChip[] SelectedRoles { get; set; }
     }
 
     protected override async Task OnParametersSetAsync()
     {
-        users = new List<IdentityUser>();
+        _users = new List<IdentityUser>();
         foreach (var roleName in Constants.RoleNamesList)
         {
-            var usersForRole = await userManager.GetUsersInRoleAsync(roleName);
-            users.AddRange(usersForRole.Except(users)); //This is dumb
+            var usersForRole = await _userManager.GetUsersInRoleAsync(roleName);
+            _users.AddRange(usersForRole.Except(_users)); //This is dumb
         }
-        await PopulateUserRoleDictionary(users);
-        userModelList = new List<userModel>();
-        foreach (var userRoleCombo in RolesPerUserDictionary)
+        await PopulateUserRoleDictionary(_users);
+        _userModelList = new List<UserModel>();
+        foreach (var userRoleCombo in _rolesPerUserDictionary)
         {
-            userModelList.Add(new userModel
+            _userModelList.Add(new UserModel
             {
-                user = userRoleCombo.Key,
-                userName = userRoleCombo.Key.UserName,
-                roles = string.Join(", ", userRoleCombo.Value)
+                User = userRoleCombo.Key,
+                UserName = userRoleCombo.Key.UserName,
+                Roles = userRoleCombo.Value.ToList()
             });
         }
         _roleTabs = Constants.RoleNamesList;
@@ -74,26 +88,27 @@
 
     private void HandleSelectedRole(string selected)
     {
-        message = "Selected role is " + selected;
+        _message = "Selected role is " + selected;
     }
 
     private void HandleShowAll()
     {
-        message = "Show all roles";
+        _message = "Show all roles";
     }
 
     private void AddRole(IdentityUser user, string roleName)
     {
-        message = $"Made {user.UserName} {roleName}";
+        _message = $"Made {user.UserName} {roleName}";
     }
 
     private async Task PopulateUserRoleDictionary(List<IdentityUser> userList)
     {
-        RolesPerUserDictionary = new Dictionary<IdentityUser, IList<string>>();
+        _rolesPerUserDictionary = new Dictionary<IdentityUser, IList<string>>();
         foreach (var user in userList)
         {
-            var rolesToAdd = await userManager.GetRolesAsync(user);
-            RolesPerUserDictionary.Add(user, rolesToAdd);
+            var rolesToAdd = await _userManager.GetRolesAsync(user);
+            _rolesPerUserDictionary.Add(user, rolesToAdd);
         }
     }
+
 }
