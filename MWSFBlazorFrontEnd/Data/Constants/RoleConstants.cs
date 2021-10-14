@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using MudBlazor;
 
 namespace MWSFBlazorFrontEnd.Data.Constants
 {
@@ -29,5 +30,13 @@ namespace MWSFBlazorFrontEnd.Data.Constants
         internal const string AdminLevelRoles = RoleNames.Admin + "," + RoleNames.Staff;
         internal const string VolunteerAndUp = AdminLevelRoles + "," + RoleNames.Volunteer;
         internal const string RunnerAndUp = VolunteerAndUp + "," + RoleNames.Runner;
+
+        internal static readonly Dictionary<string, Color> RoleColors = new()
+        {
+            { RoleNames.Admin, Color.Warning },
+            { RoleNames.Staff, Color.Secondary },
+            { RoleNames.Volunteer, Color.Info },
+            { RoleNames.Runner, Color.Success },
+        };
     }
 }

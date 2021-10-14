@@ -1,9 +1,11 @@
 ﻿@page "/Admin/UserManager"
 
 @using Microsoft.AspNetCore.Identity
+@using MWSFBlazorFrontEnd.Models.Users
+@using Microsoft.AspNetCore.Components
 @inject UserManager<IdentityUser> _userManager
 
-@attribute [Authorize(Roles=Constants.AdminLevelRoles)]
+@attribute [Authorize(Roles=RoleConstants.AdminLevelRoles)]
 
 
 <h1>User Manager</h1>
@@ -21,22 +23,26 @@
 <MudTable Items="_userModelList" Loading="@(_userModelList == null)" LoadingProgressColor="Color.Info">
     <HeaderContent>
         <MudTh>Username</MudTh>
+        <MudTh>Email</MudTh>
         <MudTh>Roles</MudTh>
+
     </HeaderContent>
     <RowTemplate>
-        <MudTd DataLabel="Username">@context.UserName</MudTd>
+        <MudTd DataLabel="UserName">@context.User.UserName</MudTd>
+        <MudTd DataLabel="Email">@context.User.Email</MudTd>
         <MudTd DataLabel="Roles">            
-            <MudChipSet MultiSelection="true" @bind-SelectedChips="@context.SelectedRoles" Filter="true">
-                @foreach (var roleName in Constants.RoleNamesList)
+            <MudChipSet MultiSelection="true" @bind-SelectedChips="@context.SelectedRoleChips" Filter="true">
+                @foreach (var roleName in RoleConstants.RoleNamesList)
                 {
-                    <MudChip Color="@_roleColors[roleName]"
-                             Default="@context.Roles.Contains(roleName)"
+                    <MudChip Color="@RoleConstants.RoleColors[roleName]"
+                             Default="@context.SelectedRoles.Contains(roleName)"
                              Text="@roleName"
                              Variant="Variant.Text">
                     </MudChip>
                 }
             </MudChipSet>
         </MudTd>
+
     </RowTemplate>
 </MudTable>
 
@@ -46,44 +52,27 @@
     private string _message = "Nothing selected yet.. ";
     private List<IdentityUser> _users = new();
     private Dictionary<IdentityUser, IList<string>> _rolesPerUserDictionary = new();
-    private List<UserModel> _userModelList = new();
-
-    private readonly Dictionary<string, Color> _roleColors = new()
-    {
-        { "Admin", Color.Warning },
-        { "Staff", Color.Secondary },
-        { "Volunteer", Color.Info },
-        { "Runner", Color.Success},
-    };
-
-    private class UserModel
-    {
-        internal IdentityUser User { get; set; }
-        internal string UserName { get; set; }
-        internal List<string> Roles { get; set; }
-        internal MudChip[] SelectedRoles { get; set; }
-    }
+    private List<UserDisplayModel> _userModelList = new();
 
     protected override async Task OnParametersSetAsync()
     {
         _users = new List<IdentityUser>();
-        foreach (var roleName in Constants.RoleNamesList)
+        foreach (var roleName in RoleConstants.RoleNamesList)
         {
             var usersForRole = await _userManager.GetUsersInRoleAsync(roleName);
-            _users.AddRange(usersForRole.Except(_users)); //This is dumb
+            _users.AddRange(usersForRole.Except(_users)); //This might be dumb
         }
         await PopulateUserRoleDictionary(_users);
-        _userModelList = new List<UserModel>();
+        _userModelList = new List<UserDisplayModel>();
         foreach (var userRoleCombo in _rolesPerUserDictionary)
         {
-            _userModelList.Add(new UserModel
+            _userModelList.Add(new UserDisplayModel
             {
                 User = userRoleCombo.Key,
-                UserName = userRoleCombo.Key.UserName,
-                Roles = userRoleCombo.Value.ToList()
+                SelectedRoles = userRoleCombo.Value.ToList()
             });
         }
-        _roleTabs = Constants.RoleNamesList;
+        _roleTabs = RoleConstants.RoleNamesList;
     }
 
     private void HandleSelectedRole(string selected)
