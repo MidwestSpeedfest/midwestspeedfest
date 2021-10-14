@@ -36,6 +36,12 @@
                     @if (SignInManager.IsSignedIn(User))
                     {
                         <li class="nav-link">
+                            <a href="~/Logout">Logout</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-link">
                             <a href="~/Login">Log in</a>
                         </li>
                     }
