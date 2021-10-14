@@ -3,11 +3,11 @@ using MudBlazor;
 
 namespace MWSFBlazorFrontEnd.Data.Constants
 {
-    public static class Constants
+    public static class RoleConstants
     {
         internal static readonly List<string> RoleNamesList;
 
-        static Constants()
+        static RoleConstants()
         {
             //Dynamically scale list of role names as they are added
             var fields = typeof(RoleNames).GetFields();

@@ -1,7 +1,6 @@
 ﻿@page "/SeedRoles"
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.Extensions.Configuration
-@using MWSFBlazorFrontEnd.Data.Constants
 
 @inject RoleManager<IdentityRole> roleManager
 @inject UserManager<IdentityUser> userManager
@@ -28,7 +27,7 @@
         try
         {
 
-            foreach (var roleName in Constants.RoleNamesList)
+            foreach (var roleName in RoleConstants.RoleNamesList)
             {
                 await roleManager.CreateAsync(new IdentityRole(roleName));
             }
@@ -37,7 +36,7 @@
 
             if (initialAdmin != null)
             {
-                await userManager.AddToRolesAsync(initialAdmin, Constants.RoleNamesList);
+                await userManager.AddToRolesAsync(initialAdmin, RoleConstants.RoleNamesList);
             }
 
             message = "seeding complete!";
