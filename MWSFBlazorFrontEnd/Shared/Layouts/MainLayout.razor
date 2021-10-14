@@ -1,12 +1,13 @@
 ﻿@inherits LayoutComponentBase
-@*<MudThemeProvider Theme="MudThemes.DefaultMudTheme" />*@
 
 <MudLayout>
     <MudTopNavbar OnDrawerToggle="HandleDrawerToggle" DrawerOpen ="_drawerOpen"/>
-
-    <MudContainer Class="my-5">
-        @Body
-    </MudContainer>
+    
+    <MudMainContent>
+        <MudContainer Class="my-5">
+            @Body
+        </MudContainer>
+    </MudMainContent>
 
     <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always"  Anchor="Anchor.Left" Elevation="2" >
         <MudDrawerHeader>
