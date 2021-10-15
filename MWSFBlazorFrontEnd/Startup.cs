@@ -34,7 +34,7 @@ namespace MWSFBlazorFrontEnd
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("MwsfDb")));
+                    Configuration.GetConnectionString("MwsfDb")), ServiceLifetime.Transient);
             services.AddDefaultIdentity<IdentityUser>(options =>
                     options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole>()
