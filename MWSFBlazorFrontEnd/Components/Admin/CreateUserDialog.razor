@@ -1,0 +1,94 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using InputType = MudBlazor.InputType
+@inject ISnackbar _snackbar
+@inject UserManager<IdentityUser> _userManager
+@inject RoleManager<IdentityRole> _roleManager
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">Create Account</MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudTextField @bind-Value="UserToCreate.UserName" Label="Username" />
+        <MudTextField @bind-Value="UserToCreate.Email" Label="Email" />
+        <MudSelect T="string" Label="Role" @bind-Value="SelectedRole">
+            @foreach (var role in _roleManager.Roles)
+            {
+                <MudSelectItem Value="role.Name"  />
+            }
+        </MudSelect>
+        <MudTextField @bind-Value="Password" InputType="InputType.Password" Label="Password" />
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Create">Create</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    private IdentityUser UserToCreate { get; set; } = new();
+    private string SelectedRole { get; set; } = RoleConstants.DefaultNewUserRoleName;
+    private string Password { get; set; }
+
+    private void Cancel()
+    {
+        MudDialog.Cancel();
+    }
+
+    private async void Create()
+    {
+        try
+        {
+            UserToCreate.UserName = UserToCreate.Email;
+            var existingUser = await _userManager.FindByEmailAsync(UserToCreate.Email);
+
+            if (existingUser == null)
+            {
+                var result = await _userManager.CreateAsync(UserToCreate, Password);
+
+                if (result.Succeeded)
+                {
+                    var user = await _userManager.FindByEmailAsync(UserToCreate.Email);
+                    var assignRole = await _userManager.AddToRoleAsync(user, SelectedRole);
+
+                    if (assignRole.Succeeded)
+                    {
+                        _snackbar.Add($"User: \"{user.UserName}\" Created.", Severity.Success);
+                        MudDialog.Close();
+                    }
+                    else
+                    {
+                        foreach (var error in assignRole.Errors)
+                        {
+                            _snackbar.Add(error.Description, Severity.Error);
+                            await Task.Delay(500);
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        _snackbar.Add(error.Description, Severity.Error);
+                        await Task.Delay(500);
+                    }
+                }
+            }
+            else
+            {
+                _snackbar.Add($"User \"{UserToCreate.UserName}\" already exists!", Severity.Error);
+            }
+        }
+        catch (Exception e)
+        {
+            _snackbar.Add("Ope, that didn't work", Severity.Error);
+            //TODO: Replace with log and don't be a complete hack
+            //TODO: Don't use TODO statements, just do it right the first time.
+            Console.WriteLine(e.Message); 
+            
+        }
+    }
+
+}

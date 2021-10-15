@@ -6,6 +6,7 @@ namespace MWSFBlazorFrontEnd.Data.Constants
     public static class RoleConstants
     {
         internal static readonly List<string> RoleNamesList;
+        internal static readonly string DefaultNewUserRoleName = RoleNames.User;
 
         static RoleConstants()
         {
@@ -25,6 +26,7 @@ namespace MWSFBlazorFrontEnd.Data.Constants
             public const string Staff = "Staff";
             public const string Volunteer = "Volunteer";
             public const string Runner = "Runner";
+            public const string User = "User";
         }
 
         internal const string AdminLevelRoles = RoleNames.Admin + "," + RoleNames.Staff;
@@ -37,6 +39,7 @@ namespace MWSFBlazorFrontEnd.Data.Constants
             { RoleNames.Staff, Color.Secondary },
             { RoleNames.Volunteer, Color.Info },
             { RoleNames.Runner, Color.Success },
+            { RoleNames.User, Color.Tertiary}
         };
     }
 }

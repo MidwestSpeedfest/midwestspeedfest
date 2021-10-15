@@ -3,24 +3,31 @@
 @using Microsoft.AspNetCore.Identity
 @using MWSFBlazorFrontEnd.Models.Users
 @using Microsoft.AspNetCore.Components
+@using MWSFBlazorFrontEnd.Components.Admin
+@using DialogOptions = MudBlazor.DialogOptions
+@using DialogService = MudBlazor.DialogService
+@inject IDialogService _dialogService
 @inject UserManager<IdentityUser> _userManager
 
-@attribute [Authorize(Roles=RoleConstants.AdminLevelRoles)]
+@attribute [Authorize(Roles = RoleConstants.AdminLevelRoles)]
 
 
 <h1>User Manager</h1>
 
 @*<h2>@message</h2>
 
-<div id="roleFilter" class="opacity-50-dark">
-    <div id="RoleButtons" class="row my-1 py-2">
-        <div class="col-auto font-weight-bold h5 text-nowrap">Filter Roles:</div>
-        <div class=" col-auto ml-auto"><button class="btn btn-primary" @onclick="@HandleShowAll">Clear Filters</button></div>
-    </div>
-    <ButtonGroup ButtonNames="_roleTabs" OnSelected="HandleSelectedRole"></ButtonGroup>
-</div>*@
-
+    <div id="roleFilter" class="opacity-50-dark">
+        <div id="RoleButtons" class="row my-1 py-2">
+            <div class="col-auto font-weight-bold h5 text-nowrap">Filter Roles:</div>
+            <div class=" col-auto ml-auto"><button class="btn btn-primary" @onclick="@HandleShowAll">Clear Filters</button></div>
+        </div>
+        <ButtonGroup ButtonNames="_roleTabs" OnSelected="HandleSelectedRole"></ButtonGroup>
+    </div>*@
+<MudButton Color="Color.Primary" Class="mb-2" OnClick="@((e) => Create())"><MudIcon Icon="@Icons.Material.Filled.Add" Color="Color.Primary" />New Account</MudButton>
 <MudTable Items="_userModelList" Loading="@(_userModelList == null)" LoadingProgressColor="Color.Info">
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">Users</MudText>
+    </ToolBarContent>
     <HeaderContent>
         <MudTh>Username</MudTh>
         <MudTh>Email</MudTh>
@@ -30,7 +37,7 @@
     <RowTemplate>
         <MudTd DataLabel="UserName">@context.User.UserName</MudTd>
         <MudTd DataLabel="Email">@context.User.Email</MudTd>
-        <MudTd DataLabel="Roles">            
+        <MudTd DataLabel="Roles">
             <MudChipSet MultiSelection="true" @bind-SelectedChips="@context.SelectedRoleChips" Filter="true">
                 @foreach (var roleName in RoleConstants.RoleNamesList)
                 {
@@ -88,6 +95,14 @@
     private void AddRole(IdentityUser user, string roleName)
     {
         _message = $"Made {user.UserName} {roleName}";
+    }
+
+    private async Task Create()
+    {
+        var dialogOptions = new DialogOptions { FullWidth = true, MaxWidth = MaxWidth.ExtraSmall };
+        var dialog = _dialogService.Show<CreateUserDialog>("Create Account", dialogOptions);
+
+        await dialog.Result;
     }
 
     private async Task PopulateUserRoleDictionary(List<IdentityUser> userList)
