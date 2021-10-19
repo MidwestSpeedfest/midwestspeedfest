@@ -19,8 +19,8 @@ namespace MWSFBlazorFrontEnd
             var config = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json", optional: false)
                 .Build();
-
-            var logPath = Directory.GetCurrentDirectory() + "/logs/";
+            var separator = Path.DirectorySeparatorChar;
+            var logPath = AppDomain.CurrentDomain.BaseDirectory + $"{separator}logs{separator}";
             Log.Logger = new LoggerConfiguration()
                 .Enrich.FromLogContext()
                 .MinimumLevel.Information()
@@ -28,7 +28,7 @@ namespace MWSFBlazorFrontEnd
                 .WriteTo.File($"{logPath}Full.log", rollingInterval: RollingInterval.Day)
                 .WriteTo.Logger(l => l.Filter.ByIncludingOnly(e => e.Level == LogEventLevel.Error)
                     .WriteTo.File($"{logPath}Error.log", rollingInterval: RollingInterval.Day))
-                
+
                 .CreateLogger();
             CreateHostBuilder(args).Build().Run();
         }
