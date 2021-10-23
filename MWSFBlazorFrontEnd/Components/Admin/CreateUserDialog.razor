@@ -42,7 +42,6 @@
     {
         try
         {
-            UserToCreate.UserName = UserToCreate.Email;
             var existingUser = await _userManager.FindByEmailAsync(UserToCreate.Email);
 
             if (existingUser == null)
