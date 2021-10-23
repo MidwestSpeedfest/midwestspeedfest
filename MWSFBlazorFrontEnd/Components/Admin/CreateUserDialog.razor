@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using Serilog
 @using InputType = MudBlazor.InputType
 @inject ISnackbar _snackbar
 @inject UserManager<IdentityUser> _userManager
@@ -81,13 +82,16 @@
                 _snackbar.Add($"User \"{UserToCreate.UserName}\" already exists!", Severity.Error);
             }
         }
+        catch (ArgumentNullException e)
+        {
+            _snackbar.Add(e.Message);
+        }
         catch (Exception e)
         {
             _snackbar.Add("Ope, that didn't work", Severity.Error);
-            //TODO: Replace with log and don't be a complete hack
-            //TODO: Don't use TODO statements, just do it right the first time.
-            Console.WriteLine(e.Message); 
-            
+            Log.Error(e.GetType().ToString());
+            Log.Error(e.Message);
+            Log.Error(e.StackTrace);
         }
     }
 
