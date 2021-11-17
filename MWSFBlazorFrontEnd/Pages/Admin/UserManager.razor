@@ -14,15 +14,6 @@
 
 <h1>User Manager</h1>
 
-@*<h2>@message</h2>
-
-    <div id="roleFilter" class="opacity-50-dark">
-        <div id="RoleButtons" class="row my-1 py-2">
-            <div class="col-auto font-weight-bold h5 text-nowrap">Filter Roles:</div>
-            <div class=" col-auto ml-auto"><button class="btn btn-primary" @onclick="@HandleShowAll">Clear Filters</button></div>
-        </div>
-        <ButtonGroup ButtonNames="_roleTabs" OnSelected="HandleSelectedRole"></ButtonGroup>
-    </div>*@
 <MudButton Color="Color.Primary" Class="mb-2" OnClick="@((e) => Create())"><MudIcon Icon="@Icons.Material.Filled.Add" Color="Color.Primary" />New Account</MudButton>
 <MudTable Items="_userModelList" Loading="@(_userModelList == null)" LoadingProgressColor="Color.Info">
     <ToolBarContent>
@@ -63,23 +54,35 @@
 
     protected override async Task OnParametersSetAsync()
     {
+        _userModelList = new List<UserDisplayModel>();
+        await PopulateUserList();
+        await SetUpSelectedRoles();
+        _roleTabs = RoleConstants.RoleNamesList;
+    }
+
+    private async Task SetUpSelectedRoles()
+    {
+        _rolesPerUserDictionary = new Dictionary<IdentityUser, IList<string>>();
+
+        foreach (var user in _users)
+        {
+            var roles = await _userManager.GetRolesAsync(user);
+            _userModelList.Add(new UserDisplayModel()
+            {
+                User = user,
+                SelectedRoles = roles.ToList()
+            });
+        }
+    }
+
+    private async Task PopulateUserList()
+    {
         _users = new List<IdentityUser>();
         foreach (var roleName in RoleConstants.RoleNamesList)
         {
             var usersForRole = await _userManager.GetUsersInRoleAsync(roleName);
             _users.AddRange(usersForRole.Except(_users)); //This might be dumb
         }
-        await PopulateUserRoleDictionary(_users);
-        _userModelList = new List<UserDisplayModel>();
-        foreach (var userRoleCombo in _rolesPerUserDictionary)
-        {
-            _userModelList.Add(new UserDisplayModel
-            {
-                User = userRoleCombo.Key,
-                SelectedRoles = userRoleCombo.Value.ToList()
-            });
-        }
-        _roleTabs = RoleConstants.RoleNamesList;
     }
 
     private void HandleSelectedRole(string selected)
@@ -107,12 +110,7 @@
 
     private async Task PopulateUserRoleDictionary(List<IdentityUser> userList)
     {
-        _rolesPerUserDictionary = new Dictionary<IdentityUser, IList<string>>();
-        foreach (var user in userList)
-        {
-            var rolesToAdd = await _userManager.GetRolesAsync(user);
-            _rolesPerUserDictionary.Add(user, rolesToAdd);
-        }
+
     }
 
 }
