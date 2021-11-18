@@ -3,14 +3,15 @@
 @using Microsoft.AspNetCore.Identity
 @using MWSFBlazorFrontEnd.Models.Users
 @using Microsoft.AspNetCore.Components
+@using Microsoft.EntityFrameworkCore
 @using MWSFBlazorFrontEnd.Components.Admin
+@using MWSFBlazorFrontEnd.Data
 @using DialogOptions = MudBlazor.DialogOptions
 @using DialogService = MudBlazor.DialogService
 @inject IDialogService _dialogService
 @inject UserManager<IdentityUser> _userManager
 
 @attribute [Authorize(Roles = RoleConstants.AdminLevelRoles)]
-
 
 <h1>User Manager</h1>
 
@@ -46,42 +47,24 @@
 
 
 @code {
-    private List<string> _roleTabs = new();
     private string _message = "Nothing selected yet.. ";
-    private List<IdentityUser> _users = new();
-    private Dictionary<IdentityUser, IList<string>> _rolesPerUserDictionary = new();
     private List<UserDisplayModel> _userModelList = new();
 
     protected override async Task OnParametersSetAsync()
     {
         _userModelList = new List<UserDisplayModel>();
-        await PopulateUserList();
-        await SetUpSelectedRoles();
-        _roleTabs = RoleConstants.RoleNamesList;
+        await SetUpUserModels();
     }
 
-    private async Task SetUpSelectedRoles()
+    private async Task SetUpUserModels()
     {
-        _rolesPerUserDictionary = new Dictionary<IdentityUser, IList<string>>();
+        var users = await _userManager.Users.ToListAsync();
 
-        foreach (var user in _users)
+        foreach (var user in users)
         {
             var roles = await _userManager.GetRolesAsync(user);
-            _userModelList.Add(new UserDisplayModel()
-            {
-                User = user,
-                SelectedRoles = roles.ToList()
-            });
-        }
-    }
-
-    private async Task PopulateUserList()
-    {
-        _users = new List<IdentityUser>();
-        foreach (var roleName in RoleConstants.RoleNamesList)
-        {
-            var usersForRole = await _userManager.GetUsersInRoleAsync(roleName);
-            _users.AddRange(usersForRole.Except(_users)); //This might be dumb
+            var userToAdd = UserDisplayModel.Create(user, roles.ToList());
+            _userModelList.Add(userToAdd);
         }
     }
 
@@ -106,11 +89,6 @@
         var dialog = _dialogService.Show<CreateUserDialog>("Create Account", dialogOptions);
 
         await dialog.Result;
-    }
-
-    private async Task PopulateUserRoleDictionary(List<IdentityUser> userList)
-    {
-
     }
 
 }
