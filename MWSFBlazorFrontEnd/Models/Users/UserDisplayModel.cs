@@ -11,6 +11,7 @@ namespace MWSFBlazorFrontEnd.Models.Users
         internal IdentityUser User { get; set; }
         internal List<string> SelectedRoles { get; set; }
         internal MudChip[] SelectedRoleChips { get; set; }
+        private UserManager<IdentityUser> _userManager;
 
         public static UserDisplayModel Create(IdentityUser user, List<string> roles)
         {
@@ -19,10 +20,26 @@ namespace MWSFBlazorFrontEnd.Models.Users
             return udm;
         }
 
+        public static async Task<UserDisplayModel> CreateAsync(UserManager<IdentityUser> userManager, string userName)
+        {
+            UserDisplayModel udm = new UserDisplayModel();
+            await udm.InitializeAsync(userManager, userName);
+            return udm;
+        }
+
+        public static async Task<UserDisplayModel> CreateAsync(UserManager<IdentityUser> userManager, IdentityUser user)
+        {
+            UserDisplayModel udm = new UserDisplayModel();
+            await udm.InitializeAsync(userManager, user.UserName);
+            return udm;
+        }
+
+
         private async Task InitializeAsync(UserManager<IdentityUser> userManager, string userName)
         {
-            User = await userManager.FindByNameAsync(userName);
-            var roles = await userManager.GetRolesAsync(User);
+            _userManager = userManager;
+            User = await _userManager.FindByNameAsync(userName);
+            var roles = await _userManager.GetRolesAsync(User);
             SelectedRoles = roles.ToList();
         }
 
@@ -39,7 +56,7 @@ namespace MWSFBlazorFrontEnd.Models.Users
             SelectedRoles = roles;
         }
 
-        // Ensure only the Create function can call the constructor:
+        // make sure no one but the Create function can call the constructor:
         private UserDisplayModel()
         { }
 
