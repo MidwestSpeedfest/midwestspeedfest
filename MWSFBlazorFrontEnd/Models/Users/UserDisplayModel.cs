@@ -11,6 +11,7 @@ namespace MWSFBlazorFrontEnd.Models.Users
         internal IdentityUser User { get; set; }
         internal List<string> SelectedRoles { get; set; }
         internal MudChip[] SelectedRoleChips { get; set; }
+        internal bool Changed = false;
         private UserManager<IdentityUser> _userManager;
 
         public static UserDisplayModel Create(IdentityUser user, List<string> roles)

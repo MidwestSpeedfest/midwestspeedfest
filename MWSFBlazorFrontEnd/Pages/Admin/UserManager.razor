@@ -4,12 +4,14 @@
 @using MWSFBlazorFrontEnd.Models.Users
 @using Microsoft.AspNetCore.Components
 @using Microsoft.EntityFrameworkCore
+@using Microsoft.IdentityModel.Tokens
 @using MWSFBlazorFrontEnd.Components.Admin
 @using MWSFBlazorFrontEnd.Data
 @using DialogOptions = MudBlazor.DialogOptions
 @using DialogService = MudBlazor.DialogService
 @inject IDialogService _dialogService
 @inject UserManager<IdentityUser> _userManager
+@inject AuthenticationStateProvider _authenticationStateProvider
 
 @attribute [Authorize(Roles = RoleConstants.AdminLevelRoles)]
 
@@ -36,7 +38,9 @@
                     <MudChip Color="@RoleConstants.RoleColors[roleName]"
                              Default="@context.SelectedRoles.Contains(roleName)"
                              Text="@roleName"
-                             Variant="Variant.Text">
+                             Variant="Variant.Text"
+                             Disabled="@(ShouldDisableRoleChipBasedOnPermission(roleName))"
+                             OnClick="@(() => context.Changed = true)">
                     </MudChip>
                 }
             </MudChipSet>
@@ -88,6 +92,29 @@
         var dialog = _dialogService.Show<CreateUserDialog>("Create Account", dialogOptions);
 
         await dialog.Result;
+    }
+
+    //TODO: Move this logic to UserDisplayModel class
+    private void SaveRolesForUser(UserDisplayModel user)
+    {
+        if (user.Changed) //Only alter changed users
+        {
+            //Never alter Staff role from the UI
+            var checkedRolesNames = user.SelectedRoleChips.Select(x => x.Text).Where(x => x != RoleConstants.RoleNames.Staff).ToList();
+            _userManager.AddToRolesAsync(user.User, checkedRolesNames);
+            _userManager.RemoveFromRolesAsync(user.User, RoleConstants.RoleNamesList.Where(x => !checkedRolesNames.Contains(x)
+                                                                                                && !x.Equals(RoleConstants.RoleNames.Staff)));
+        }
+    }
+
+    //TODO: Extract this logic out of UserManger.razor. Make it reusable
+    private bool ShouldDisableRoleChipBasedOnPermission(string roleName)
+    {
+        var state = Task.Run(() => _authenticationStateProvider.GetAuthenticationStateAsync().GetAwaiter().GetResult()).Result;
+        var userIsAdmin = state.User.IsInRole(RoleConstants.RoleNames.Admin);
+
+        return roleName == RoleConstants.RoleNames.Admin  ||
+               (roleName == RoleConstants.RoleNames.Staff && !userIsAdmin);
     }
 
 }
