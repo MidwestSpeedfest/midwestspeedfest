@@ -29,6 +29,11 @@ namespace MWSFBlazorFrontEnd.Data.Constants
             public const string User = "User";
         }
 
+        internal static List<string> ProtectedRoles = new()
+        {
+            RoleNames.Staff
+        };
+
         internal const string AdminLevelRoles = RoleNames.Admin + "," + RoleNames.Staff;
         internal const string VolunteerAndUp = AdminLevelRoles + "," + RoleNames.Volunteer;
         internal const string RunnerAndUp = VolunteerAndUp + "," + RoleNames.Runner;

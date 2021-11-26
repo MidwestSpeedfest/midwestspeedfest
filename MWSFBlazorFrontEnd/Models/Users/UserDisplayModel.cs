@@ -1,8 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
 using MudBlazor;
+using MWSFBlazorFrontEnd.Data.Constants;
+using Serilog;
 
 namespace MWSFBlazorFrontEnd.Models.Users
 {
@@ -14,10 +18,10 @@ namespace MWSFBlazorFrontEnd.Models.Users
         internal bool Changed = false;
         private UserManager<IdentityUser> _userManager;
 
-        public static UserDisplayModel Create(IdentityUser user, List<string> roles)
+        public static UserDisplayModel Create(UserManager<IdentityUser> userManager, IdentityUser user, List<string> roles)
         {
             UserDisplayModel udm = new UserDisplayModel(); 
-            udm.Initialize(user, roles);
+            udm.Initialize(userManager, user, roles);
             return udm;
         }
 
@@ -51,8 +55,9 @@ namespace MWSFBlazorFrontEnd.Models.Users
             SelectedRoles = roles.ToList();
         }
 
-        private void Initialize(IdentityUser user, List<string> roles)
+        private void Initialize(UserManager<IdentityUser> userManager, IdentityUser user, List<string> roles)
         {
+            _userManager = userManager;
             User = user;
             SelectedRoles = roles;
         }
@@ -60,6 +65,43 @@ namespace MWSFBlazorFrontEnd.Models.Users
         // make sure no one but the Create function can call the constructor:
         private UserDisplayModel()
         { }
+
+        internal async Task SaveRolesAsync()
+        {
+            if (Changed) //Only alter changed users
+            {
+                var checkedRolesNames = SelectedRoleChips.Select(x => x.Text).ToList();
+                var rolesToAdd = checkedRolesNames.Except(SelectedRoles).Except(RoleConstants.ProtectedRoles);
+                foreach (var role in rolesToAdd)
+                {
+                    try
+                    {
+                        await _userManager.AddToRoleAsync(User, role);
+                    }
+                    catch(Exception e)
+                    {
+                        Log.Error($"Error when saving user {User.UserName} : {e.Message}");
+                    }
+                }
+
+                var rolesToRemove = SelectedRoles.Except(checkedRolesNames).Except(RoleConstants.ProtectedRoles).ToList();
+                foreach (var role in rolesToRemove)
+                {
+                    try
+                    {
+                        await _userManager.RemoveFromRoleAsync(User, role);
+                    }
+                    catch (Exception e)
+                    {
+                        Log.Error($"Error when saving user {User.UserName} : {e.Message}");
+                    }
+                }
+
+                SelectedRoles = checkedRolesNames;
+                Changed = false;
+            }
+
+        }
 
     }
 }
