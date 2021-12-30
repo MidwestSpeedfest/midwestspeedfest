@@ -71,6 +71,14 @@ a.navbar-brand {
     /*word-break: break-all;*/
 }
 
+/*Radzen html editor overrides*/
+.rz-popup {
+    color:#000000
+}
+
+.rz-html-editor-toolbar {
+    color: #000000
+}
 
 /*various opacity dark backgrounds for text contrast / accessibility use throughout the site*/
 .opacity-75-dark {
