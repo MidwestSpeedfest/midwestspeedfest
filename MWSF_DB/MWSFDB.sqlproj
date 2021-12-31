@@ -71,6 +71,10 @@
     <Build Include="Tables\IdentityFramework\AspNetUserRoles.sql" />
     <Build Include="Tables\IdentityFramework\AspNetUsers.sql" />
     <Build Include="Tables\IdentityFramework\AspNetUserTokens.sql" />
+    <Build Include="Tables\Alert.sql" />
+    <Build Include="StoredProcedures\spAlert_Create.sql" />
+    <Build Include="StoredProcedures\spAlert_Read.sql" />
+    <Build Include="StoredProcedures\spAlert_Update.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="MWSFDB.refactorlog" />
