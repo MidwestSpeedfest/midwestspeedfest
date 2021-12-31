@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace MWSFBlazorFrontEnd.Areas.Identity.Pages.Account
 {
@@ -76,13 +77,22 @@ namespace MWSFBlazorFrontEnd.Areas.Identity.Pages.Account
             returnUrl ??= Url.Content("~/");
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-        
+
             if (ModelState.IsValid)
             {
-                // This doesn't count login failures towards account lockout
-                var userNameFromEmail = _userManager.FindByEmailAsync(Input.Email).Result.UserName;
-               // var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
-                var result = await _signInManager.PasswordSignInAsync(userNameFromEmail, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                SignInResult result;
+                
+                var userFromEmail = _userManager.FindByEmailAsync(Input.Email).Result;
+                if (userFromEmail is null)
+                {
+                    result = SignInResult.Failed;
+                }
+                else
+                {
+                    // This doesn't count login failures towards account lockout
+                    result = await _signInManager.PasswordSignInAsync(userFromEmail.UserName, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                }
+
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
