@@ -9,3 +9,4 @@ BEGIN
 	insert into dbo.Alerts(Name,HtmlContent,Severity, Active)
 	values(@Name,@HtmlContent,@Severity, @Active)
 END
+GO

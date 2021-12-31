@@ -6,3 +6,4 @@ BEGIN
 	FROM Alerts
 	WHERE Id = @Id
 END
+GO

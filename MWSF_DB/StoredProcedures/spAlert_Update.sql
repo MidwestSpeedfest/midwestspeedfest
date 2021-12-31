@@ -10,3 +10,4 @@ BEGIN
 		SET Name = @Name, HtmlContent = @HtmlContent, Severity = @Severity, Active = @Active
 		Where Id = @Id
 END
+GO
