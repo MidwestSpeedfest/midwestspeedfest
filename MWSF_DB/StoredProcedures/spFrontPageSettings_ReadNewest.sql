@@ -5,3 +5,4 @@ BEGIN
 	FROM dbo.FrontPageSettings
 	ORDER BY Id DESC;
 END
+GO

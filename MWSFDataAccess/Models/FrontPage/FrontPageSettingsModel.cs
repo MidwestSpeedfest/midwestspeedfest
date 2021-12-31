@@ -19,5 +19,8 @@ namespace MWSFDataAccess.Models.FrontPage
         public bool ShowCountdown { get; set; }
         public string CountdownTitle { get; set; }
         public DateTime? CountdownUntil { get; set; }
+
+        public bool ShowAlert { get; set; }
+        public int? AlertId { get; set; }
     }
 }

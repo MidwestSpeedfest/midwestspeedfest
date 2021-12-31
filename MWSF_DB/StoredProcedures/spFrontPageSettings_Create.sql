@@ -17,3 +17,4 @@ BEGIN
 	values(@Author, @ShowLogo, @HtmlContent, @ShowCountdown, @CountdownTitle, @CountdownUntil, @ShowAlert, @AlertId)
 
 END
+GO

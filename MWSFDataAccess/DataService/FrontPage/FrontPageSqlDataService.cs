@@ -38,7 +38,10 @@ namespace MWSFDataAccess.DataService.FrontPage
 
                 settings.ShowCountdown,
                 settings.CountdownTitle,
-                settings.CountdownUntil
+                settings.CountdownUntil,
+
+                settings.ShowAlert,
+                settings.AlertId
             };
 
             await _dataAccess.SaveData("dbo.spFrontPageSettings_Create", s, DbName);
