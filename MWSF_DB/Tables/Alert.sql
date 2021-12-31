@@ -12,13 +12,13 @@
 Go
 
 CREATE TRIGGER [dbo].[Trigger_UpdateModified_Alert]
-    ON [dbo].[FrontPageSettings]
+    ON [dbo].[Alerts]
     FOR INSERT, UPDATE
     AS
     BEGIN
-        UPDATE dbo.FrontPageSettings
+        UPDATE dbo.Alerts
         SET Modified = SYSDATETIME()
         FROM Inserted i
-        WHERE dbo.FrontPageSettings.Id = i.Id
+        WHERE dbo.Alerts.Id = i.Id
     END
 GO
