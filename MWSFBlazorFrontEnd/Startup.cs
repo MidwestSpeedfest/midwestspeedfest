@@ -15,6 +15,7 @@ using MWSFDataAccess.DataAccess;
 using MWSFDataAccess.DataService.FrontPage;
 using Radzen;
 using MudBlazor.Services;
+using MWSFDataAccess.DataService.Alerts;
 
 
 namespace MWSFBlazorFrontEnd
@@ -66,6 +67,7 @@ namespace MWSFBlazorFrontEnd
             /*MWSF stuff*/
             services.AddSingleton<ISqlDataAccess, SqlDataAccess>();
             services.AddSingleton<IFrontPageDataService, FrontPageSqlDataService>();
+            services.AddSingleton<IAlertDataService, AlertSqlDataService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
