@@ -29,6 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Components\Admin\" />
     <Folder Include="Helpers\ComponentOverrides\" />
     <Folder Include="Helpers\Extensions\" />
     <Folder Include="wwwroot\Content\Images\Icons\" />
