@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using MudBlazor;
+using MWSFBlazorFrontEnd.Helpers.CustomDataValidators;
 using MWSFDataAccess.Models.Alerts;
 
 namespace MWSFBlazorFrontEnd.Models.Alerts
@@ -19,7 +21,25 @@ namespace MWSFBlazorFrontEnd.Models.Alerts
         [Required]
         public string HtmlContent { get; set; }
 
-        public int Severity { get; set; }
+        [Required]
+        [IsWithinEnumValidator(EnumToCheck = typeof(Severity))]
+        public int Severity
+        {
+            get => Severity;
+            set
+            {
+                if (Enum.IsDefined(typeof(Severity), value))
+                {
+                    Severity = value;
+                }
+                else
+                {
+                    throw new ArgumentOutOfRangeException($"value '{value}' is out of range for MudBlazor severity");
+                }
+            }
+        }
+
+        [Required]
         public bool Active { get; set; }
     }
 }
