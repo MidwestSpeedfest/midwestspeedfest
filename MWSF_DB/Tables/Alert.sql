@@ -5,7 +5,7 @@
     [Modified] DATETIME NULL,
     [Name] NVARCHAR(50) NOT NULL,
     [HtmlContent] NVARCHAR(MAX) NOT NULL, 
-    [Severity] NVARCHAR(50) NOT NULL, 
+    [Severity] INT NOT NULL, 
     [Active] BIT NULL DEFAULT 1 
 )
 

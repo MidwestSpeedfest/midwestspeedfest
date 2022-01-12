@@ -2,7 +2,7 @@
 	@Id BIGINT,
 	@Name NVARCHAR(50),
 	@HtmlContent NVARCHAR(MAX),
-	@Severity NVARCHAR(50),
+	@Severity INTEGER,
 	@Active BIT
 AS
 BEGIN

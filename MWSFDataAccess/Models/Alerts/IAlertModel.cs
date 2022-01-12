@@ -14,7 +14,7 @@ namespace MWSFDataAccess.Models.Alerts
 
         string Name { get; set; }
         string HtmlContent { get; set; }
-        string Severity { get; set; }
+        int Severity { get; set; }
         bool Active { get; set; }
 
     }
