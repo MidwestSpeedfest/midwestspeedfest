@@ -11,6 +11,8 @@
 @inject IMapper Mapper
 @inject IJSRuntime JsRuntime;
 
+@attribute [Authorize(Roles = RoleConstants.AdminLevelRoles)]
+
 <div class="text-white mx-3">
     <h2 class="">Edit homepage</h2>
 

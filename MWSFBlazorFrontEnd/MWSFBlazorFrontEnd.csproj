@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <UserSecretsId>aspnet-MWSFBlazorFrontEnd-84F562B8-2B2D-47FF-876A-A5E5DE68EAA7</UserSecretsId>
   </PropertyGroup>
 
@@ -32,6 +32,7 @@
     <Folder Include="Components\Admin\" />
     <Folder Include="Helpers\ComponentOverrides\" />
     <Folder Include="Helpers\Extensions\" />
+    <Folder Include="Helpers\CustomMapping\" />
     <Folder Include="wwwroot\Content\Images\Icons\" />
     <Folder Include="wwwroot\Content\UploadedImages\" />
     <Folder Include="wwwroot\lib\" />

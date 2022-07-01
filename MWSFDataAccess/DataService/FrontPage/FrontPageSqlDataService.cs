@@ -12,7 +12,7 @@ namespace MWSFDataAccess.DataService.FrontPage
     public class FrontPageSqlDataService : IFrontPageDataService
     {
         private readonly ISqlDataAccess _dataAccess;
-        private const string DbName = "MwsfDb";
+        private const string DbName = DataServiceConstants.DbName;
 
         public FrontPageSqlDataService(ISqlDataAccess dataAccess)
         {

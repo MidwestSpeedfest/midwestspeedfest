@@ -9,7 +9,7 @@ Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "MWSFDB", "MWSF_DB\MWSFDB.sq
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MWSFDataAccess", "MWSFDataAccess\MWSFDataAccess.csproj", "{06036C77-ACB1-47C4-8E3D-1B3594BB4F3E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MWSFTest", "MWSFTest\MWSFTest.csproj", "{35C193CE-D644-47AC-AB75-626A9A767BA1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MWSFTest", "MWSFTest\MWSFTest.csproj", "{35C193CE-D644-47AC-AB75-626A9A767BA1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
