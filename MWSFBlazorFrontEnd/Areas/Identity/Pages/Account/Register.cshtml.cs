@@ -88,8 +88,18 @@ namespace MWSFBlazorFrontEnd.Areas.Identity.Pages.Account
                         values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    try
+                    {
+                        await _emailSender.SendEmailAsync(Input.Email, "Confirm your email for Midwest Speedfest",
+                        $"Please confirm your new MidwestSpeedfest account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    }
+                    catch(Exception e)
+                    {
+                        _logger.LogError($"Error sending email during user creation for email {user.Email}");
+                        _logger.LogError(e.Message);
+                        ModelState.AddModelError($"{user.Id}:Mail_Failure", "Error sending confirmation email. Please contact admin.");
+                        await _userManager.DeleteAsync(user);
+                    }
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {

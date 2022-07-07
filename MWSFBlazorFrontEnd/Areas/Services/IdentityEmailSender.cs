@@ -30,23 +30,24 @@ namespace MWSFBlazorFrontEnd.Areas.Services
 
         public async Task SendEmailAsync(string email, string subject, string htmlMessage)
         {
-
-            MailMessage message = new MailMessage()
+            using (var client = new SmtpClient())
             {
-                From = new MailAddress(_fromAddress),
-                Subject = subject,
-                To = { new MailAddress(email)},
-                Body = $"<html><body>{htmlMessage}</body><html>",
-                IsBodyHtml = true
-            };
+                MailMessage message = new MailMessage()
+                {
+                    From = new MailAddress(_fromAddress),
+                    Subject = subject,
+                    To = { new MailAddress(email) },
+                    Body = $"<html><body>{htmlMessage}</body><html>",
+                    IsBodyHtml = true
+                };
 
-            var smtpClient = new SmtpClient(_host)
-            {
-                Port = _port,
-                Credentials = new NetworkCredential(_fromAddress, _password)
-            };
+                client.Host = _host;
+                client.Port = _port;
+                client.Credentials = new NetworkCredential(_fromAddress, _password);
+                client.EnableSsl = true;
+                client.Send(message);
+            }
 
-            smtpClient.Send(message);
         }
     }
 }
