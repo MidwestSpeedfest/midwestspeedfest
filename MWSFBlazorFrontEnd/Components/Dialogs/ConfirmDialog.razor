@@ -1,0 +1,40 @@
+﻿@using Serilog
+
+<MudDialog>
+    <DialogContent>
+        <MudText> 
+            @bodyText
+        </MudText>
+    </DialogContent>
+    <DialogActions>
+        <MudButton 
+                   OnClick="Cancel"
+                   Color=Color.Info
+                   Variant=Variant.Outlined>                   
+                   Cancel
+        </MudButton>
+        <MudButton OnClick="Confirm"
+                   Color="@confirmColor" 
+                   Variant=Variant.Filled>
+                   @confirmText
+        </MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code{
+    [CascadingParameter] 
+    MudDialogInstance MudDialog { get; set; }
+
+    [Parameter]
+    public string bodyText { get; set; } = "Are you sure?";
+
+    [Parameter]
+    public Color confirmColor { get; set; } = Color.Success;
+
+    [Parameter]
+    public string confirmText { get; set; } = "Confirm";
+
+    private void Cancel() => MudDialog.Cancel();
+
+    private void Confirm() => MudDialog.Close(DialogResult.Ok(true));
+}
