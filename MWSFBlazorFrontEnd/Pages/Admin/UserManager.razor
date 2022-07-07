@@ -36,6 +36,9 @@
         <MudTh>Username</MudTh>
         <MudTh>Email</MudTh>
         <MudTh>Roles</MudTh>
+        <AuthorizeView Roles=@RoleConstants.AdminLevelRoles>
+            <MudTh>Delete</MudTh>
+        </AuthorizeView>
 
     </HeaderContent>
     <RowTemplate>
@@ -55,7 +58,17 @@
                 }
             </MudChipSet>
         </MudTd>
-
+        <AuthorizeView Roles=@RoleConstants.AdminLevelRoles Context="auth">
+            <MudTd DataLabel="Delete">
+                 <MudButton Color=Color.Warning 
+                            OnClick="@(() => Delete(context))"
+                            Variant="Variant.Filled" 
+                            Class="mb-2">
+                            <MudIcon Icon="@Icons.Material.Filled.Delete" Color=Color.Default />
+                            DELETE
+                </MudButton>
+            </MudTd>
+        </AuthorizeView>
     </RowTemplate>
 </MudTable>
 
@@ -66,8 +79,7 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        _userModelList = new List<UserDisplayModel>();
-        await SetUpUserModels();
+        await ReloadTable();
     }
 
     private async Task SetUpUserModels()
@@ -102,6 +114,36 @@
         var dialog = _dialogService.Show<CreateUserDialog>("Create Account", dialogOptions);
 
         await dialog.Result;
+    }
+
+    private async Task Delete(UserDisplayModel user)
+    {
+        var dialogOptions = new DialogOptions { FullWidth = true, MaxWidth = MaxWidth.ExtraSmall };
+        var dialogParams = new DialogParameters
+            {
+                ["bodyText"] = $"Are you sure you want to delete {user.User.UserName}?",
+                ["confirmColor"] = Color.Warning,
+                ["confirmText"] = "Delete"
+            };
+
+        var dialog = _dialogService.Show<ConfirmDialog>("Delete User",dialogParams,dialogOptions);
+        var result = await dialog.Result;
+
+        if (!result.Cancelled)
+        {
+            try
+            {
+                await _userManager.DeleteAsync(user.User);
+                await ReloadTable();
+                _snackbar.Add($"User {user.User.UserName} deleted", Severity.Success);
+            }
+            catch(Exception e)
+            {
+                Log.Error($"Unable to delete {user.User.UserName}");
+                Log.Error(e, e.Message);
+                _snackbar.Add($"Unable to delete {user.User.UserName}", Severity.Error);
+            }
+        }
     }
 
     private async Task SaveRolesForAllChangedUsers()
@@ -161,9 +203,10 @@
 
     }
 
-    private void ReloadTable()
+    private async Task ReloadTable()
     {
-
+        _userModelList = new List<UserDisplayModel>();
+        await SetUpUserModels();
     }
 
     //TODO: Extract this logic out of UserManger.razor. Make it reusable
