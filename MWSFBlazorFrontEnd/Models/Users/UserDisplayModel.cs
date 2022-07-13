@@ -66,12 +66,16 @@ namespace MWSFBlazorFrontEnd.Models.Users
         private UserDisplayModel()
         { }
 
-        internal async Task SaveRolesAsync()
+        internal async Task SaveRolesAsync(bool isAdmin = false)
         {
             if (Changed) //Only alter changed users
             {
                 var checkedRolesNames = SelectedRoleChips.Select(x => x.Text).ToList();
-                var rolesToAdd = checkedRolesNames.Except(SelectedRoles).Except(RoleConstants.ProtectedRoles);
+                var rolesToAdd = checkedRolesNames.Where(x => x != RoleConstants.RoleNames.Admin);
+                if (!isAdmin)
+                {
+                    rolesToAdd = rolesToAdd.Except(RoleConstants.ProtectedRoles);
+                }
                 foreach (var role in rolesToAdd)
                 {
                     try
@@ -84,7 +88,11 @@ namespace MWSFBlazorFrontEnd.Models.Users
                     }
                 }
 
-                var rolesToRemove = SelectedRoles.Except(checkedRolesNames).Except(RoleConstants.ProtectedRoles).ToList();
+                var rolesToRemove = SelectedRoles.Except(checkedRolesNames).ToList();
+                if (!isAdmin)
+                {
+                    rolesToRemove = rolesToRemove.Except(RoleConstants.ProtectedRoles).ToList();
+                }
                 foreach (var role in rolesToRemove)
                 {
                     try

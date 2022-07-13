@@ -150,6 +150,7 @@
     {
         List<string> errorMessages = new();
         var changedUsers = _userModelList.Where(x => x.Changed).ToList();
+        var isAdmin = await isCurrentUserAdmin();
 
         if (changedUsers.Count == 0)
         {
@@ -160,7 +161,7 @@
         {
             try
             {
-                await changedUser.SaveRolesAsync();
+                await changedUser.SaveRolesAsync(isAdmin);
             }
             catch (Exception e)
             {
@@ -212,11 +213,15 @@
     //TODO: Extract this logic out of UserManger.razor. Make it reusable
     private bool ShouldDisableRoleChipBasedOnPermission(string roleName)
     {
-        var state = Task.Run(() => _authenticationStateProvider.GetAuthenticationStateAsync().GetAwaiter().GetResult()).Result;
-        var userIsAdmin = state.User.IsInRole(RoleConstants.RoleNames.Admin);
+        var userIsAdmin = Task.Run(() => isCurrentUserAdmin().GetAwaiter().GetResult()).Result;
 
         return roleName == RoleConstants.RoleNames.Admin ||
                (roleName == RoleConstants.RoleNames.Staff && !userIsAdmin);
     }
 
+    private async Task<bool> isCurrentUserAdmin()
+    {
+        var state = await _authenticationStateProvider.GetAuthenticationStateAsync();
+        return state.User.IsInRole(RoleConstants.RoleNames.Admin);
+    }
 }
