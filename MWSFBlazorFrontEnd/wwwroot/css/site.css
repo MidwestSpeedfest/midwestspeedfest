@@ -501,3 +501,8 @@ a.below_player_links {
 hr {
     background-color: #ffffff;
 }
+
+/*Radzen html editor overrides*/
+.rz-html-editor-content {
+    background-color: #31238e;
+}

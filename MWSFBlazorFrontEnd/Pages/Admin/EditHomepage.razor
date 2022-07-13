@@ -26,24 +26,33 @@
     }
     <div class="row" id="indexSettings">
         <div class="opacity-50-dark p-3 col-md-10">
-
-            <EditForm Context="blah" Model="@_editModel" OnSubmit="@HandleOnSubmit">
+            <EditForm Context="homepage" Model="@_editModel" OnSubmit="@HandleOnSubmit">
                 <DataAnnotationsValidator />
                 <ValidationSummary />
+                <MudTabs Elevation="2" Rounded="true" ApplyEffectsToContainer="true" Color=Color.Primary PanelClass="pa-6">
+                    <MudTabPanel Text="Visual Editor">
+                       <div id="htmlContent">
+                        <label class="font-weight-bold my-2" for="htmlEditor">
+                            Page Content: &nbsp;
+                        </label>
+                        <RadzenHtmlEditor @bind-Value="@_editModel.HtmlContent" Cols="40" ></RadzenHtmlEditor>
+                        </div>
+                    </MudTabPanel>
+                    <MudTabPanel Text="Raw HTML">
+                        <label class="font-weight-bold my-2" for="rawHtmlEditor">
+                            HTML Editor: &nbsp;
+                        </label>
+                        <MudTextField @bind-Value=_editModel.HtmlContent Lines="10" Class="bg-dark" id="rawHtmlEditor"></MudTextField>
+                    </MudTabPanel>
+                </MudTabs>
                 <label class="font-weight-bold my-2">
-                    Show Logo: &nbsp;
-                    <RadzenCheckBox @bind-Value="_editModel.ShowLogo"></RadzenCheckBox>
-                </label> <br />
-                <div id="htmlContent">
-                    <label class="font-weight-bold my-2" for="htmlEditor">
-                        Details Text: &nbsp;
-                    </label>
-                    <RadzenHtmlEditor id="Hompage_Html_Editor" @bind-Value="@_editModel.HtmlContent" Cols="40" ></RadzenHtmlEditor>
-                    </div>
-                <label class="font-weight-bold my-2">
-                    Show Countdown: &nbsp;
-                    <RadzenCheckBox @bind-Value="@_editModel.ShowCountdown"></RadzenCheckBox>
+                Show Logo: &nbsp;
+                <RadzenCheckBox @bind-Value="@_editModel.ShowLogo"></RadzenCheckBox>
                 </label><br />
+                <label class="font-weight-bold my-2">
+                Show Countdown: &nbsp;
+                <RadzenCheckBox @bind-Value="@_editModel.ShowCountdown"></RadzenCheckBox>
+                 </label><br />
                 @if (_editModel.ShowCountdown)
                 {
                     <label class="font-weight-bold my-2">
@@ -58,9 +67,9 @@
                         </span>
                     </label>
                     <button class="btn btn-info" type="button" @onclick="@(() =>
-                                                                     {
-                                                                         _editModel.CountdownUntil = DateTime.Now;
-                                                                     })">
+                                                                        {
+                                                                            _editModel.CountdownUntil = DateTime.Now;
+                                                                        })">
                         Now
                     </button>
                 }
@@ -110,14 +119,6 @@
         _interopRunner = new(JsRuntime);
 
         await base.OnParametersSetAsync();
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-
-        await _interopRunner.SetRadzenHtmlBgColor("Hompage_Html_Editor");
-
-        await base.OnAfterRenderAsync(firstRender);
     }
 
     private void HideDemo()
