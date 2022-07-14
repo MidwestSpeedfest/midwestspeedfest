@@ -19,7 +19,6 @@ namespace MWSFTest.DisplayTests.Models.Users
         [SetUp]
         public void SetUp()
         {
-            identityUser = new IdentityUser();
             currentRoles = new List<string>();
             changedRoles = new List<string>();
 
