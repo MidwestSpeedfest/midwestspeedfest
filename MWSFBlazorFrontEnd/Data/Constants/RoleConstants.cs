@@ -5,8 +5,8 @@ namespace MWSFBlazorFrontEnd.Data.Constants
 {
     public static class RoleConstants
     {
-        internal static readonly List<string> RoleNamesList;
-        internal static readonly string DefaultNewUserRoleName = RoleNames.User;
+        public static readonly List<string> RoleNamesList;
+        public static readonly string DefaultNewUserRoleName = RoleNames.User;
 
         static RoleConstants()
         {
@@ -19,7 +19,7 @@ namespace MWSFBlazorFrontEnd.Data.Constants
             }
         }
 
-        internal static class RoleNames
+        public static class RoleNames
         {
             //These are public to so they can be used in Reflection
             public const string Admin = "Admin";
@@ -29,16 +29,16 @@ namespace MWSFBlazorFrontEnd.Data.Constants
             public const string User = "User";
         }
 
-        internal static List<string> ProtectedRoles = new()
+        public static List<string> ProtectedRoles = new()
         {
             RoleNames.Staff
         };
 
-        internal const string AdminLevelRoles = RoleNames.Admin + "," + RoleNames.Staff;
-        internal const string VolunteerAndUp = AdminLevelRoles + "," + RoleNames.Volunteer;
-        internal const string RunnerAndUp = VolunteerAndUp + "," + RoleNames.Runner;
+        public const string AdminLevelRoles = RoleNames.Admin + "," + RoleNames.Staff;
+        public const string VolunteerAndUp = AdminLevelRoles + "," + RoleNames.Volunteer;
+        public const string RunnerAndUp = VolunteerAndUp + "," + RoleNames.Runner;
 
-        internal static readonly Dictionary<string, Color> RoleColors = new()
+        public static readonly Dictionary<string, Color> RoleColors = new()
         {
             { RoleNames.Admin, Color.Warning },
             { RoleNames.Staff, Color.Secondary },

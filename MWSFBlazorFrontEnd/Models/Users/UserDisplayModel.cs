@@ -13,9 +13,9 @@ namespace MWSFBlazorFrontEnd.Models.Users
     public class UserDisplayModel
     {
         internal IdentityUser User { get; set; }
-        internal List<string> SelectedRoles { get; set; }
+        public List<string> SelectedRoles { get; set; }
         internal MudChip[] SelectedRoleChips { get; set; }
-        internal bool Changed = false;
+        public bool Changed = false;
         private UserManager<IdentityUser> _userManager;
 
         public static UserDisplayModel Create(UserManager<IdentityUser> userManager, IdentityUser user, List<string> roles)
@@ -62,53 +62,87 @@ namespace MWSFBlazorFrontEnd.Models.Users
             SelectedRoles = roles;
         }
 
-        // make sure no one but the Create function can call the constructor:
-        private UserDisplayModel()
-        { }
+        /// <summary>
+        /// Empty constructor used for unit tests
+        /// </summary>
+        /// 
+        public UserDisplayModel()
+        {
+            SelectedRoles = new List<string>();
+        }
+        
+        /// <summary>
+        /// Parameterized constructor used for unit tests only.
+        /// </summary>
+        /// <param name="roles"></param>
+        public UserDisplayModel(List<string> roles)
+        { SelectedRoles = roles; }
 
-        internal async Task SaveRolesAsync(bool isAdmin = false)
+        public async Task SaveRolesAsync(bool isAdmin = false)
         {
             if (Changed) //Only alter changed users
             {
-                var checkedRolesNames = SelectedRoleChips.Select(x => x.Text).ToList();
-                var rolesToAdd = checkedRolesNames.Where(x => x != RoleConstants.RoleNames.Admin);
-                if (!isAdmin)
+                
+                //Set up roles to add / remove
+                var checkedRolesNames = GetSelectedRolesFromChips().Where(x => x != RoleConstants.RoleNames.Admin);
+                var rolesToAdd = isAdmin ? checkedRolesNames.Except(SelectedRoles) :
+                    checkedRolesNames.Except(SelectedRoles).Except(RoleConstants.ProtectedRoles);
+                var rolesToRemove = isAdmin ? SelectedRoles.Except(checkedRolesNames) :
+                    SelectedRoles.Except(checkedRolesNames).Except(RoleConstants.ProtectedRoles);            
+
+                //Add missing roles
+                if (rolesToAdd.Any())
                 {
-                    rolesToAdd = rolesToAdd.Except(RoleConstants.ProtectedRoles);
-                }
-                foreach (var role in rolesToAdd)
-                {
-                    try
+                    foreach (var role in rolesToAdd)
                     {
-                        await _userManager.AddToRoleAsync(User, role);
-                    }
-                    catch(Exception e)
-                    {
-                        Log.Error($"Error when saving user {User.UserName} : {e.Message}");
+                        await AddRole(role);
                     }
                 }
 
-                var rolesToRemove = SelectedRoles.Except(checkedRolesNames).ToList();
-                if (!isAdmin)
+                //Remove any unselected roles
+                if (SelectedRoles.Any() && rolesToRemove.Any())
                 {
-                    rolesToRemove = rolesToRemove.Except(RoleConstants.ProtectedRoles).ToList();
-                }
-                foreach (var role in rolesToRemove)
-                {
-                    try
+                    foreach (var role in rolesToRemove)
                     {
-                        await _userManager.RemoveFromRoleAsync(User, role);
-                    }
-                    catch (Exception e)
-                    {
-                        Log.Error($"Error when saving user {User.UserName} : {e.Message}");
+                        await RemoveRole(role);
                     }
                 }
 
-                SelectedRoles = checkedRolesNames;
+                //Update in-memory list for model and reset changed flag
+                SelectedRoles = isAdmin ? checkedRolesNames.Except(rolesToRemove).ToList() :
+                    checkedRolesNames.Except(rolesToRemove).Except(RoleConstants.ProtectedRoles).ToList();
                 Changed = false;
             }
 
+        }
+
+        public virtual async Task AddRole(string role)
+        {
+            try
+            {
+                await _userManager.AddToRoleAsync(User, role);
+            }
+            catch (Exception e)
+            {
+                Log.Error($"Error when saving user {User.UserName} : {e.Message}");
+            }
+        }
+
+        public virtual async Task RemoveRole(string role)
+        {
+            try
+            {
+                await _userManager.RemoveFromRoleAsync(User, role);
+            }
+            catch (Exception e)
+            {
+                Log.Error($"Error when saving user {User.UserName} : {e.Message}");
+            }
+        }
+
+        public virtual List<string> GetSelectedRolesFromChips()
+        {
+            return SelectedRoleChips.Select(x => x.Text).ToList();
         }
 
     }
