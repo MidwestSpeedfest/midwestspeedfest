@@ -20,7 +20,7 @@ namespace MWSFBlazorFrontEnd.Models.Users
 
         public static UserDisplayModel Create(UserManager<IdentityUser> userManager, IdentityUser user, List<string> roles)
         {
-            UserDisplayModel udm = new UserDisplayModel(); 
+            UserDisplayModel udm = new UserDisplayModel();
             udm.Initialize(userManager, user, roles);
             return udm;
         }
@@ -70,7 +70,7 @@ namespace MWSFBlazorFrontEnd.Models.Users
         {
             SelectedRoles = new List<string>();
         }
-        
+
         /// <summary>
         /// Parameterized constructor used for unit tests only.
         /// </summary>
@@ -82,13 +82,13 @@ namespace MWSFBlazorFrontEnd.Models.Users
         {
             if (Changed) //Only alter changed users
             {
-                
+
                 //Set up roles to add / remove
                 var checkedRolesNames = GetSelectedRolesFromChips().Where(x => x != RoleConstants.RoleNames.Admin);
                 var rolesToAdd = isAdmin ? checkedRolesNames.Except(SelectedRoles) :
                     checkedRolesNames.Except(SelectedRoles).Except(RoleConstants.ProtectedRoles);
                 var rolesToRemove = isAdmin ? SelectedRoles.Except(checkedRolesNames) :
-                    SelectedRoles.Except(checkedRolesNames).Except(RoleConstants.ProtectedRoles);            
+                    SelectedRoles.Except(checkedRolesNames).Except(RoleConstants.ProtectedRoles);
 
                 //Add missing roles
                 if (rolesToAdd.Any())
@@ -142,8 +142,26 @@ namespace MWSFBlazorFrontEnd.Models.Users
 
         public virtual List<string> GetSelectedRolesFromChips()
         {
-            return SelectedRoleChips.Select(x => x.Text).ToList();
+            return SelectedRoleChips != null ? SelectedRoleChips.Select(x => x.Text).ToList() : new List<string>();
         }
 
+        public bool IsAdmin()
+        {
+            return IsInRole(RoleConstants.RoleNames.Admin);
+        }
+
+        public bool IsStaff()
+        {
+            return IsInRole(RoleConstants.RoleNames.Staff);
+        }
+
+        public bool IsStaffOrAdmin()
+        {
+            return IsAdmin() || IsStaff();
+        }
+
+        public bool IsInRole(string roleName) { 
+            return SelectedRoles != null && SelectedRoles.Any() ? SelectedRoles.Contains(roleName) : GetSelectedRolesFromChips().Contains(roleName); 
+        }
     }
 }

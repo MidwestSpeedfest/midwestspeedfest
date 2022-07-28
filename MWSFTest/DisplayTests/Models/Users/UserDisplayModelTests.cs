@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MWSFBlazorFrontEnd.Data.Constants;
+using System.Linq;
 
 namespace MWSFTest.DisplayTests.Models.Users
 {
@@ -93,6 +94,106 @@ namespace MWSFTest.DisplayTests.Models.Users
             Assert.True(roleCount == 1, $"Contains correct number of roles: 1 expected, found {roleCount}");
             Assert.True(sut.SelectedRoles.Contains("Pesto"), "Did not remove any roles");
             Assert.False(sut.SelectedRoles.Contains("Dabesto"), "Did not add any roles");
+        }
+
+        [Test]
+        public void FindsUserIsAdmin()
+        {
+            sut.SelectedRoles = new List<string> { RoleConstants.RoleNames.Admin };
+
+            var result = sut.IsAdmin();
+
+            Assert.True(result, "User found to be admin");
+        }
+
+        [Test]
+        public void FindsNonAdmin()
+        {
+            var nonAdminRoles = RoleConstants.RoleNamesList;
+            nonAdminRoles.Remove(RoleConstants.RoleNames.Admin);
+            sut.SelectedRoles = nonAdminRoles;
+
+            var result = sut.IsAdmin();
+
+            Assert.False(result, "User not found to be admin");
+        }
+
+        [Test]
+        public void FindsUserIsStaff()
+        {
+            sut.SelectedRoles = new List<string> { RoleConstants.RoleNames.Staff };
+
+            var result = sut.IsStaff();
+
+            Assert.True(result, "User found to be Staff");
+        }
+
+        [Test]
+        public void FindsNonStaff()
+        {
+            var nonStaffRoles = RoleConstants.RoleNamesList;
+            nonStaffRoles.Remove(RoleConstants.RoleNames.Staff);
+            sut.SelectedRoles = nonStaffRoles;
+
+            var result = sut.IsStaff();
+
+            Assert.False(result, "User not found to be Staff");
+        }
+
+        [Test]
+        public void FindsStaffOrAdmin()
+        {
+            sut.SelectedRoles = new List<string> { RoleConstants.RoleNames.Staff };
+
+            var result = sut.IsStaffOrAdmin();
+
+            Assert.True(result, "User found to be Staff in Staff or Admin");
+
+            sut.SelectedRoles = new List<string> { RoleConstants.RoleNames.Admin };
+
+            result = sut.IsStaffOrAdmin();
+
+            Assert.True(result, "User found to be Admin in Staff or Admin");
+
+            sut.SelectedRoles = new List<string> { RoleConstants.RoleNames.Admin, RoleConstants.RoleNames.Staff };
+
+            result = sut.IsStaffOrAdmin();
+
+            Assert.True(result, "User found to be Admin AND Staff in Staff or Admin");
+        }
+
+        [Test]
+        public void FindsNonStaffOrAdmin()
+        {
+            var staffOrAdminRoles = new List<string> { RoleConstants.RoleNames.Admin, RoleConstants.RoleNames.Staff };
+         
+            sut.SelectedRoles = RoleConstants.RoleNamesList.Except(staffOrAdminRoles).ToList();
+
+            var result = sut.IsStaffOrAdmin();
+
+            Assert.False(result, "User not found to be admin");
+        }
+
+        [Test]
+        public void UserIsInRole()
+        {
+            var roleToTest = RoleConstants.RoleNames.User;
+            sut.SelectedRoles = new List<string> { roleToTest };
+
+            var result = sut.IsInRole(roleToTest);
+
+            Assert.True(result, "User is found to be in expected role.");
+        }
+
+        [Test]
+        public void UserIsNotInRole()
+        {
+            var roleToRemove =  RoleConstants.RoleNames.User;
+            sut.SelectedRoles = RoleConstants.RoleNamesList.Except(new List<string> { roleToRemove }).ToList();
+
+            var result = sut.IsInRole(roleToRemove);
+
+            Assert.False(result, "User is found not to be in role (as expected)");
         }
     }
 }

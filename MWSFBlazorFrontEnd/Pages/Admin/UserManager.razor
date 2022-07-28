@@ -63,7 +63,8 @@
                  <MudButton Color=Color.Warning 
                             OnClick="@(() => Delete(context))"
                             Variant="Variant.Filled" 
-                            Class="mb-2">
+                            Class="mb-2"
+                            Disabled=(context.IsAdmin())>
                             <MudIcon Icon="@Icons.Material.Filled.Delete" Color=Color.Default />
                             DELETE
                 </MudButton>
