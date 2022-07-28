@@ -61,6 +61,7 @@ namespace MWSFBlazorFrontEnd
                     options.ClientSecret = Configuration["Authentication:Discord:ClientSecret"];
                     options.Scope.Add("identify");
                     options.Scope.Add("guilds");
+                    options.SaveTokens = true;
                 });
             /*Identity Stuff*/
             services.AddTransient<IEmailSender, IdentityEmailSender>();
