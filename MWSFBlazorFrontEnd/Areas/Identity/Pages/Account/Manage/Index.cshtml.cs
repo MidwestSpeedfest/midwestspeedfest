@@ -34,10 +34,6 @@ namespace MWSFBlazorFrontEnd.Areas.Identity.Pages.Account.Manage
         {
             [Display(Name="Display Name")]
             public string Username { get; set; }
-
-            [Phone]
-            [Display(Name = "Phone number")]
-            public string PhoneNumber { get; set; }
         }
 
         private async Task LoadAsync(IdentityUser user)
@@ -49,8 +45,7 @@ namespace MWSFBlazorFrontEnd.Areas.Identity.Pages.Account.Manage
 
             Input = new InputModel
             {
-                Username = userName,
-                PhoneNumber = phoneNumber
+                Username = userName
             };
         }
 
@@ -91,17 +86,6 @@ namespace MWSFBlazorFrontEnd.Areas.Identity.Pages.Account.Manage
                 else
                 {
                   //  user = await _userManager.GetUserAsync(User);
-                }
-            }
-
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-            if (Input.PhoneNumber != phoneNumber)
-            {
-                var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
-                if (!setPhoneResult.Succeeded)
-                {
-                    StatusMessage = "Unexpected error when trying to set phone number.";
-                    return RedirectToPage();
                 }
             }
 
