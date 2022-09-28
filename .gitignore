@@ -353,3 +353,4 @@ MigrationBackup/
 #AppSettings
 **/appsettings.json
 **/appSettings.Development.json
+**/appsettings.production.json
