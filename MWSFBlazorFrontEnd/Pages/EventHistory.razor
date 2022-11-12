@@ -1,0 +1,50 @@
+﻿@page "/EventHistory"
+@using AutoMapper
+@using MWSFBlazorFrontEnd.Components.EventInfo
+@using MWSFBlazorFrontEnd.Models.Events
+@using MWSFDataAccess.DummyData
+
+@inject IMapper Mapper;
+@inject IDummyDataService dummyDataService;
+
+<MudText Align="Align.Center"><h1>Past Events</h1></MudText>
+
+@foreach(var eventYear in _eventsByYear){
+    <EventYearSummary EventYear="@eventYear.Key" EventsList="@eventYear.Value" />
+    <MudDivider />
+}
+
+
+@code {
+    private List<EventDisplayModel> _eventsList;
+    private Dictionary<int, List<EventDisplayModel>> _eventsByYear;
+
+    protected override Task OnParametersSetAsync()
+    {
+        _eventsList = new List<EventDisplayModel>();
+        _eventsByYear = new Dictionary<int, List<EventDisplayModel>>();
+        var datalist = dummyDataService.GetDummyEvents();
+        foreach(var data in datalist){
+            _eventsList.Add(Mapper.Map<EventDisplayModel>(data));
+        }
+
+        _eventsByYear = GetEventsSortedByYear(_eventsList);
+
+        return base.OnParametersSetAsync();
+    }
+
+    private Dictionary<int, List<EventDisplayModel>> GetEventsSortedByYear(List<EventDisplayModel> input){
+
+        var returnDict = new Dictionary<int, List<EventDisplayModel>>();
+
+        var years = input.Select(x => x.EventStart.Year).OrderByDescending(y => y).Distinct().ToList();
+
+        foreach(var year in years){
+            returnDict.Add(year, input.Where(x => x.EventStart.Year == year).OrderBy(y => y.EventStart).ToList());
+        }
+
+        return returnDict;
+
+    }
+
+}

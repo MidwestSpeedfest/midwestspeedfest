@@ -1,0 +1,35 @@
+﻿@using MWSFBlazorFrontEnd.Models.Events
+<MudGrid>
+    <MudItem xs="12"> 
+        <div class="h4">@_event.Name</div>
+        <div class="h5"> @_event.EventStart.ToShortDateString() to @_event.EventEnd.ToShortDateString() </div>
+    </MudItem>
+    <MudItem xs="6">
+        <MudPaper class="d-flex align-center justify-center mud-width-full mud-height-full py-8">
+            <a href="@_event.YouTubeLink">Youtube Link</a>
+        </MudPaper>
+    </MudItem>
+    <MudItem xs="6">
+        <MudPaper class="d-flex align-center justify-center mud-width-full mud-height-full py-8 mud-theme-info">
+            <ul>
+                <li>Total raised: $@_event.MoneyRaised</li>
+                <li>Charity: @_event.CharityName</li>
+            </ul>
+        </MudPaper>
+    </MudItem>
+</MudGrid>
+
+@code {
+
+    [Parameter]
+    public EventDisplayModel Event { get; set; }
+    
+    private EventDisplayModel _event;
+
+    protected override Task OnParametersSetAsync()
+    {
+        _event = Event;
+        return base.OnParametersSetAsync();
+    }
+
+}

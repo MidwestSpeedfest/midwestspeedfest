@@ -1,0 +1,51 @@
+﻿@using MWSFBlazorFrontEnd.Models.Events
+
+<MudGrid Class="my-4">
+    <MudItem xs="12" Class="hidden-sm">
+        <MudGrid>
+            <MudHidden Breakpoint="Breakpoint.MdAndUp">
+                <MudItem xs=" 12">
+                     <MudText Align="Align.Center">
+                         <h3>@EventYear </h3>
+                     </MudText>
+                </MudItem>
+            </MudHidden>
+            <MudItem xs="12" md="4">
+                <EventSummary Event="@EventsList.FirstOrDefault()"/>
+            </MudItem>
+            <MudHidden Breakpoint="Breakpoint.SmAndDown">
+                <MudItem xs="4">
+                    <MudText Align="Align.Center">
+                        <h2>@EventYear </h2>
+                    </MudText>
+                </MudItem>
+            </MudHidden>
+            @if(EventsList.Count > 1){
+                <MudItem xs="12" md="4">
+                    <EventSummary Event="@EventsList[1]"/>
+                </MudItem>
+            }
+            @if(EventsList.Count >2){
+                @for (int i = 1; i < EventsList.Count; i++ ){
+                    <MudItem xs="12" md="4">
+                        <EventSummary Event="@EventsList[1]"/>
+                    </MudItem>
+                }
+            }
+        </MudGrid>
+    </MudItem>
+</MudGrid>
+
+
+@code {
+    [Parameter]
+    public int EventYear { get; set; }
+
+    [Parameter]
+    public List<EventDisplayModel> EventsList { get; set; }
+
+    protected override Task OnParametersSetAsync()
+    {
+        return base.OnParametersSetAsync();
+    }
+}
