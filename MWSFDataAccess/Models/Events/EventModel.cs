@@ -4,7 +4,7 @@ namespace MWSFDataAccess.Models.Events
 {
     public class EventModel : IEventModel
     {
-        public int Id { get; set; }
+        public ulong Id { get; set; }
         public string Name { get; set; }
         public DateTime? Created { get; set; } = DateTime.Now;
         public DateTime? Modified { get; set; } = DateTime.Now;

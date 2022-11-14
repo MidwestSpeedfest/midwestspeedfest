@@ -9,7 +9,7 @@ namespace MWSFBlazorFrontEnd.Models.FrontPage
 {
     public class DisplayFrontPageSettingsModel : IFrontPageSettingsModel
     {
-        public int Id { get; set; }
+        public ulong Id { get; set; }
         public DateTime? Created { get; set; }
         public DateTime? Modified { get; set; }
         public string Author { get; set; }

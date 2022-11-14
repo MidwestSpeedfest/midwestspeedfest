@@ -8,7 +8,7 @@ namespace MWSFDataAccess.Models
 {
     public interface IDatabaseModel
     {
-        int Id { get; set; }
+        ulong Id { get; set; }
         public DateTime? Created { get; set; }
         public DateTime? Modified { get; set; }
     }
