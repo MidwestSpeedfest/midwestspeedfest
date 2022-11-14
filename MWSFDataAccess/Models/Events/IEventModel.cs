@@ -6,12 +6,9 @@ using System.Threading.Tasks;
 
 namespace MWSFDataAccess.Models.Events
 {
-    public interface IEventModel
+    public interface IEventModel : IDatabaseModel
     {
-        int Id { get; set; }
         string Name { get; set; }
-        DateTime Created { get; set; }
-        DateTime Updated { get; set; }
         DateTime EventStart { get; set; }
         DateTime EventEnd { get; set; }
         double MoneyRaised { get; set; }

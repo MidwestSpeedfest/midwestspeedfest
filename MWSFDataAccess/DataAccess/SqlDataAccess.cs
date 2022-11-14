@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -10,6 +11,12 @@ namespace MWSFDataAccess.DataAccess
 {
     public class SqlDataAccess : ISqlDataAccess
     {
+        /// <summary>
+        /// THIS IS A DEPRECATED CLASS
+        /// DO NOT USE FOR NEW FUNCTIONALITY
+        /// </summary>
+
+
         private readonly IConfiguration _config;
 
         public SqlDataAccess(IConfiguration config)
@@ -17,6 +24,7 @@ namespace MWSFDataAccess.DataAccess
             _config = config;
         }
 
+        [Obsolete("Deprecated. Use IGenericDataService objects instead.")]
         public async Task<List<T>> LoadData<T, U>(string storedProcedure, U parameters, string connectionStringName)
         {
             string connectionString = _config.GetConnectionString(connectionStringName);
@@ -29,6 +37,7 @@ namespace MWSFDataAccess.DataAccess
             }
         }
 
+        [Obsolete("Deprecated. Use IGenericDataService objects instead.")]
         public async Task SaveData<T>(string storedProcedure, T parameters, string connectionStringName)
         {
             string connectionString = _config.GetConnectionString(connectionStringName);

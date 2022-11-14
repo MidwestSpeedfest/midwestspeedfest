@@ -2,11 +2,8 @@
 
 namespace MWSFDataAccess.Models.FrontPage
 {
-    public interface IFrontPageSettingsModel
+    public interface IFrontPageSettingsModel : IDatabaseModel
     {
-        int Id { get; set; }
-        DateTime? Created { get; set; }
-        DateTime? Modified { get; set; }
         public string Author { get; set; }
 
         bool ShowLogo { get; set; }

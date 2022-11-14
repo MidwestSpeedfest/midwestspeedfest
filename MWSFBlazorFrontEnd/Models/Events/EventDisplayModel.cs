@@ -7,8 +7,8 @@ namespace MWSFBlazorFrontEnd.Models.Events
     {
         public int Id { get; set;  }
         public string Name { get; set; }
-        public DateTime Created { get; set; }
-        public DateTime Updated { get; set; }
+        public DateTime? Created { get; set; }
+        public DateTime? Modified { get; set; }
         public DateTime EventStart { get; set; }
         public DateTime EventEnd { get; set; }
         public double MoneyRaised { get; set; }
